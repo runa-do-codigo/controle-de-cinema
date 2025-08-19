@@ -1,11 +1,13 @@
 ﻿using ControleDeCinema.Aplicacao.ModuloGeneroFilme;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace ControleDeCinema.WebApp.Controllers;
 
 [Route("generos")]
+[Authorize(Roles = "Empresa")]
 public class GeneroFilmeController : Controller
 {
     private readonly GeneroFilmeAppService generoFilmeAppService;

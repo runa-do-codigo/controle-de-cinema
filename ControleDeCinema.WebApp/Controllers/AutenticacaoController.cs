@@ -18,6 +18,9 @@ public class AutenticacaoController : Controller
     [HttpGet("registro")]
     public IActionResult Registro()
     {
+        if (User.Identity.IsAuthenticated)
+            return RedirectToAction("Index", "Home");
+
         var registroVm = new RegistroViewModel();
 
         return View(registroVm);
@@ -47,6 +50,9 @@ public class AutenticacaoController : Controller
     [HttpGet("login")]
     public IActionResult Login()
     {
+        if (User.Identity.IsAuthenticated)
+            return RedirectToAction("Index", "Home");
+
         var loginVm = new LoginViewModel();
 
         return View(loginVm);
@@ -63,12 +69,14 @@ public class AutenticacaoController : Controller
         if (resultado.IsFailed)
             return RedirectToAction(nameof(Login));
 
-        return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
+        return RedirectToAction(nameof(HomeController.Index), "Home");
     }
 
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
+        await autenticacaoAppService.LogoutAsync();
+
         return RedirectToAction(nameof(Login));
     }
 }

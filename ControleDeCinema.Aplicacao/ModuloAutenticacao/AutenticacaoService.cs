@@ -37,6 +37,24 @@ public class AutenticacaoAppService
             return Result.Fail(ResultadosErro.RequisicaoInvalidaErro(erros));
         }
 
+        var tipoString = tipo.ToString();
+
+        var resultadoBuscaCargo = await roleManager.FindByNameAsync(tipoString);
+
+        if (resultadoBuscaCargo is null)
+        {
+            var cargo = new Cargo
+            {
+                Name = tipoString,
+                NormalizedName = tipoString.ToUpper(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            };
+
+            await roleManager.CreateAsync(cargo);
+        }
+
+        await userManager.AddToRoleAsync(usuario, tipoString);
+
         return Result.Ok();
     }
 
@@ -51,6 +69,13 @@ public class AutenticacaoAppService
 
         if (!resultadoLogin.Succeeded)
             return Result.Fail("Login ou senha incorretos.");
+
+        return Result.Ok();
+    }
+
+    public async Task<Result> LogoutAsync()
+    {
+        await signInManager.SignOutAsync();
 
         return Result.Ok();
     }
