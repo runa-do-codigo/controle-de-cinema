@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36327.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Apresentação", "1. Apresentação", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Núcleo", "2. Núcleo", "{C9BFEEE7-782F-44A7-BE24-A0547110B7C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infraestrutura", "3. Infraestrutura", "{D287F21C-0272-43C8-B5E9-32EC00C7F59F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Infraestrutura.Orm", "ControleDeCinema.Infraestrutura.Orm\ControleDeCinema.Infraestrutura.Orm.csproj", "{6A8B7846-7737-491F-9FBB-1B76B786DC2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Dominio", "ControleDeCinema.Dominio\ControleDeCinema.Dominio.csproj", "{2419C3EA-4F4F-F6DC-4C20-6DA0F41297E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.WebApp", "ControleDeCinema.WebApp\ControleDeCinema.WebApp.csproj", "{328E3A6D-5500-4F47-AF70-BBC44FF212C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Aplicacao", "ControleDeCinema.Aplicacao\ControleDeCinema.Aplicacao.csproj", "{EAE3E615-3E4F-4EC0-8849-D69EF8746A21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A8B7846-7737-491F-9FBB-1B76B786DC2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8B7846-7737-491F-9FBB-1B76B786DC2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8B7846-7737-491F-9FBB-1B76B786DC2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8B7846-7737-491F-9FBB-1B76B786DC2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2419C3EA-4F4F-F6DC-4C20-6DA0F41297E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2419C3EA-4F4F-F6DC-4C20-6DA0F41297E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2419C3EA-4F4F-F6DC-4C20-6DA0F41297E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2419C3EA-4F4F-F6DC-4C20-6DA0F41297E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{328E3A6D-5500-4F47-AF70-BBC44FF212C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328E3A6D-5500-4F47-AF70-BBC44FF212C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328E3A6D-5500-4F47-AF70-BBC44FF212C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328E3A6D-5500-4F47-AF70-BBC44FF212C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE3E615-3E4F-4EC0-8849-D69EF8746A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE3E615-3E4F-4EC0-8849-D69EF8746A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE3E615-3E4F-4EC0-8849-D69EF8746A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE3E615-3E4F-4EC0-8849-D69EF8746A21}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A8B7846-7737-491F-9FBB-1B76B786DC2E} = {D287F21C-0272-43C8-B5E9-32EC00C7F59F}
+		{2419C3EA-4F4F-F6DC-4C20-6DA0F41297E3} = {C9BFEEE7-782F-44A7-BE24-A0547110B7C2}
+		{328E3A6D-5500-4F47-AF70-BBC44FF212C1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{EAE3E615-3E4F-4EC0-8849-D69EF8746A21} = {C9BFEEE7-782F-44A7-BE24-A0547110B7C2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97011726-34E8-4F39-ACF8-32120C5EDAC2}
+	EndGlobalSection
+EndGlobal

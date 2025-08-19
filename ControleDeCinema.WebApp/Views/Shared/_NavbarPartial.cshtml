@@ -1,0 +1,31 @@
+﻿@{
+    var rotaGenerosFilmeAtiva = ViewContext.HttpContext.Request.Path.StartsWithSegments("/generos-filme") ? "btn btn-primary px-3" : "nav-link text-primary fw-semibold";
+    var rotaFilmesAtiva = ViewContext.HttpContext.Request.Path.StartsWithSegments("/filmes") ? "btn btn-primary px-3" : "nav-link text-primary fw-semibold";
+    var rotaSalasAtiva = ViewContext.HttpContext.Request.Path.StartsWithSegments("/salas") ? "btn btn-primary px-3" : "nav-link text-primary fw-semibold";
+    var rotaSessoesAtiva = ViewContext.HttpContext.Request.Path.StartsWithSegments("/sessoes") ? "btn btn-primary px-3" : "nav-link text-primary fw-semibold";
+}
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand fs-4 fw-bold" href="/">Controle de Cinema</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav gap-2 ms-auto">
+                <li class="nav-item">
+                    <a class="@rotaGenerosFilmeAtiva" asp-controller="GeneroFilme" asp-action="Index">Gêneros de Filme</a>
+                </li>
+                <li class="nav-item">
+                    <a class="@rotaFilmesAtiva" asp-controller="Filme" asp-action="Index">Filmes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="@rotaSalasAtiva" asp-controller="Sala" asp-action="Index">Salas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="@rotaSessoesAtiva" asp-controller="Sessao" asp-action="Index">Sessões</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
