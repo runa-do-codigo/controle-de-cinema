@@ -28,6 +28,12 @@ public class AutenticacaoController : Controller
         return View(loginVm);
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginViewModel loginVm)
+    {
+        return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
+    }
+
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {

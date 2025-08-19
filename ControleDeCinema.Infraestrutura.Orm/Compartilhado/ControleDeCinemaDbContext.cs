@@ -1,10 +1,12 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
+using ControleDeCinema.Dominio.ModuloAutenticacao;
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infraestrutura.Orm.Compartilhado;
 
-public class ControleDeCinemaDbContext : DbContext, IUnitOfWork
+public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Cargo, Guid>, IUnitOfWork
 {
     public DbSet<GeneroFilme> GenerosFilme { get; set; }
 
