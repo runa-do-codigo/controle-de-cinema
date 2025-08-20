@@ -1,4 +1,5 @@
 ﻿using ControleDeCinema.Aplicacao.ModuloGeneroFilme;
+using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,18 +72,7 @@ public class GeneroFilmeController : Controller
         var resultado = generoFilmeAppService.Cadastrar(entidade);
 
         if (resultado.IsFailed)
-        {
-            foreach (var erro in resultado.Errors)
-            {
-                if (erro.Metadata["TipoErro"].ToString() == "RegistroDuplicado")
-                {
-                    ModelState.AddModelError("CadastroUnico", erro.Reasons[0].Message);
-                    break;
-                }
-            }
-
-            return View(cadastrarVM);
-        }
+            return this.PreencherErrosModelState(resultado, cadastrarVM);
 
         return RedirectToAction(nameof(Index));
     }
@@ -128,18 +118,7 @@ public class GeneroFilmeController : Controller
         var resultado = generoFilmeAppService.Editar(id, entidadeEditada);
 
         if (resultado.IsFailed)
-        {
-            foreach (var erro in resultado.Errors)
-            {
-                if (erro.Metadata["TipoErro"].ToString() == "RegistroDuplicado")
-                {
-                    ModelState.AddModelError("CadastroUnico", erro.Reasons[0].Message);
-                    break;
-                }
-            }
-
-            return View(editarVM);
-        }
+            return this.PreencherErrosModelState(resultado, editarVM);
 
         return RedirectToAction(nameof(Index));
     }

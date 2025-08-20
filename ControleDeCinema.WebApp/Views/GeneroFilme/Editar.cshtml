@@ -12,13 +12,7 @@
                 <form asp-action="Editar">
                     <h3>Formulário de Cadastro</h3>
 
-                    @if (ViewData.ModelState["CadastroUnico"]?.Errors.Count > 0)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
-                            @ViewData.ModelState["CadastroUnico"]!.Errors.First().ErrorMessage
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
+                    <partial name="_ValidationAlert"></partial>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Descricao" class="control-label fs-5">Descrição:</label>

@@ -2,6 +2,7 @@
 using ControleDeCinema.Dominio.ModuloAutenticacao;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeCinema.WebApp.Controllers;
@@ -79,6 +80,7 @@ public class AutenticacaoController : Controller
     }
 
     [HttpPost("logout")]
+    [Authorize]
     public async Task<IActionResult> Logout()
     {
         await autenticacaoAppService.LogoutAsync();

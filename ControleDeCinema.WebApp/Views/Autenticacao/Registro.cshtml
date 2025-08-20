@@ -17,20 +17,7 @@
                     <span class="fs-4 fw-normal">Registro</span>
                 </div>
 
-                @if (!ViewData.ModelState.IsValid)
-                {
-                    var primeiroErro = ViewData.ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .FirstOrDefault();
-
-                    if (primeiroErro is not null)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            @primeiroErro.ErrorMessage
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
-                }
+                <partial name="_ValidationAlert"></partial>
 
                 <form asp-action="Registro" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="mt-3">
 
