@@ -1,31 +1,32 @@
-﻿using ControleDeCinema.Aplicacao.ModuloGeneroFilme;
+﻿using ControleDeCinema.Aplicacao.ModuloFilme;
+using ControleDeCinema.Aplicacao.ModuloGeneroFilme;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeCinema.WebApp.Controllers;
 
-[Route("generos")]
-[Authorize(Roles = "Empresa")]
-public class GeneroFilmeController : Controller
+[Route("filmes")]
+public class FilmeController : Controller
 {
+    private readonly FilmeAppService filmeAppService;
     private readonly GeneroFilmeAppService generoFilmeAppService;
 
-    public GeneroFilmeController(GeneroFilmeAppService generoFilmeAppService)
+    public FilmeController(FilmeAppService filmeAppService, GeneroFilmeAppService generoFilmeAppService)
     {
+        this.filmeAppService = filmeAppService;
         this.generoFilmeAppService = generoFilmeAppService;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        var resultado = generoFilmeAppService.SelecionarTodos();
+        var resultado = filmeAppService.SelecionarTodos();
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacaoHome(resultado.ToResult());
 
-        var visualizarVM = new VisualizarGenerosFilmeViewModel(resultado.Value);
+        var visualizarVM = new VisualizarFilmesViewModel(resultado.Value);
 
         this.ObterNotificacaoPendente();
 
@@ -35,18 +36,22 @@ public class GeneroFilmeController : Controller
     [HttpGet("cadastrar")]
     public IActionResult Cadastrar()
     {
-        var cadastrarVM = new CadastrarGeneroFilmeViewModel();
+        var generosDisponiveis = generoFilmeAppService.SelecionarTodos().ValueOrDefault;
+
+        var cadastrarVM = new CadastrarFilmeViewModel(generosDisponiveis);
 
         return View(cadastrarVM);
     }
 
     [HttpPost("cadastrar")]
     [ValidateAntiForgeryToken]
-    public IActionResult Cadastrar(CadastrarGeneroFilmeViewModel cadastrarVM)
+    public IActionResult Cadastrar(CadastrarFilmeViewModel cadastrarVM)
     {
-        var entidade = FormularioGeneroFilmeViewModel.ParaEntidade(cadastrarVM);
+        var generosDisponiveis = generoFilmeAppService.SelecionarTodos().ValueOrDefault;
 
-        var resultado = generoFilmeAppService.Cadastrar(entidade);
+        var entidade = FormularioFilmeViewModel.ParaEntidade(cadastrarVM, generosDisponiveis);
+
+        var resultado = filmeAppService.Cadastrar(entidade);
 
         if (resultado.IsFailed)
             return this.PreencherErrosModelState(resultado, cadastrarVM);
@@ -57,14 +62,20 @@ public class GeneroFilmeController : Controller
     [HttpGet("editar/{id:guid}")]
     public IActionResult Editar(Guid id)
     {
-        var resultado = generoFilmeAppService.SelecionarPorId(id);
+        var resultado = filmeAppService.SelecionarPorId(id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado.ToResult());
 
-        var editarVM = new EditarGeneroFilmeViewModel(
+        var generosDisponiveis = generoFilmeAppService.SelecionarTodos().ValueOrDefault;
+
+        var editarVM = new EditarFilmeViewModel(
             id,
-            resultado.Value.Descricao
+            resultado.Value.Titulo,
+            resultado.Value.Duracao,
+            resultado.Value.Lancamento,
+            resultado.Value.Genero.Id,
+            generosDisponiveis
         );
 
         return View(editarVM);
@@ -72,11 +83,13 @@ public class GeneroFilmeController : Controller
 
     [HttpPost("editar/{id:guid}")]
     [ValidateAntiForgeryToken]
-    public IActionResult Editar(Guid id, EditarGeneroFilmeViewModel editarVM)
+    public IActionResult Editar(Guid id, EditarFilmeViewModel editarVM)
     {
-        var entidadeEditada = FormularioGeneroFilmeViewModel.ParaEntidade(editarVM);
+        var generosDisponiveis = generoFilmeAppService.SelecionarTodos().ValueOrDefault;
 
-        var resultado = generoFilmeAppService.Editar(id, entidadeEditada);
+        var entidadeEditada = FormularioFilmeViewModel.ParaEntidade(editarVM, generosDisponiveis);
+
+        var resultado = filmeAppService.Editar(id, entidadeEditada);
 
         if (resultado.IsFailed)
             return this.PreencherErrosModelState(resultado, editarVM);
@@ -87,14 +100,14 @@ public class GeneroFilmeController : Controller
     [HttpGet("excluir/{id:guid}")]
     public IActionResult Excluir(Guid id)
     {
-        var resultado = generoFilmeAppService.SelecionarPorId(id);
+        var resultado = filmeAppService.SelecionarPorId(id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado.ToResult());
 
-        var excluirVM = new ExcluirGeneroFilmeViewModel(
+        var excluirVM = new ExcluirFilmeViewModel(
             resultado.Value.Id,
-            resultado.Value.Descricao
+            resultado.Value.Titulo
         );
 
         return View(excluirVM);
@@ -102,9 +115,9 @@ public class GeneroFilmeController : Controller
 
     [HttpPost("excluir/{id:guid}")]
     [ValidateAntiForgeryToken]
-    public IActionResult Excluir(ExcluirGeneroFilmeViewModel excluirVm)
+    public IActionResult Excluir(ExcluirFilmeViewModel excluirVm)
     {
-        var resultado = generoFilmeAppService.Excluir(excluirVm.Id);
+        var resultado = filmeAppService.Excluir(excluirVm.Id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado);
@@ -115,12 +128,12 @@ public class GeneroFilmeController : Controller
     [HttpGet("detalhes/{id:guid}")]
     public IActionResult Detalhes(Guid id)
     {
-        var resultado = generoFilmeAppService.SelecionarPorId(id);
+        var resultado = filmeAppService.SelecionarPorId(id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado.ToResult());
 
-        var detalhesVm = DetalhesGeneroFilmeViewModel.ParaDetalhesVm(resultado.Value);
+        var detalhesVm = DetalhesFilmeViewModel.ParaDetalhesVm(resultado.Value);
 
         return View(detalhesVm);
     }
