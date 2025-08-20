@@ -10,12 +10,21 @@ public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Cargo, Guid>
 {
     public DbSet<GeneroFilme> GenerosFilme { get; set; }
 
-    public ControleDeCinemaDbContext(DbContextOptions options) : base(options)
+    private readonly ITenantProvider? tenantProvider;
+
+    public ControleDeCinemaDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null) : base(options)
     {
+        this.tenantProvider = tenantProvider;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        if (tenantProvider is not null)
+        {
+            modelBuilder.Entity<GeneroFilme>()
+                .HasQueryFilter(x => x.UsuarioId == tenantProvider.UsuarioId.GetValueOrDefault());
+        }
+
         var assembly = typeof(ControleDeCinemaDbContext).Assembly;
 
         modelBuilder.ApplyConfigurationsFromAssembly(assembly);

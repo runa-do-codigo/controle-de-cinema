@@ -22,11 +22,7 @@ public class GeneroFilmeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var claimId = User.FindFirst(ClaimTypes.NameIdentifier);
-
-        var usuarioId = Guid.Parse(claimId.Value);
-
-        var resultado = generoFilmeAppService.SelecionarTodos(usuarioId);
+        var resultado = generoFilmeAppService.SelecionarTodos();
 
         if (resultado.IsFailed)
         {
@@ -72,13 +68,7 @@ public class GeneroFilmeController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Cadastrar(CadastrarGeneroFilmeViewModel cadastrarVM)
     {
-        var claimId = User.FindFirst(ClaimTypes.NameIdentifier);
-
-        var usuarioId = Guid.Parse(claimId.Value);
-
         var entidade = FormularioGeneroFilmeViewModel.ParaEntidade(cadastrarVM);
-
-        entidade.UsuarioId = usuarioId;
 
         var resultado = generoFilmeAppService.Cadastrar(entidade);
 

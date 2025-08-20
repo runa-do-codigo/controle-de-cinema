@@ -56,12 +56,5 @@ public class RepositorioBaseEmOrm<T> where T : EntidadeBase<T>
     {
         return registros.ToList();
     }
-
-    public virtual List<T> SelecionarRegistrosPorUsuario(Guid usuarioId)
-    {
-        return registros
-            .Where(x => x.UsuarioId == usuarioId)
-            .ToList();
-    }
 }
 

@@ -1,5 +1,6 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
 using ControleDeCinema.Aplicacao.Compartilhado;
+using ControleDeCinema.Dominio.ModuloAutenticacao;
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using FluentResults;
 using Microsoft.Extensions.Logging;
@@ -8,16 +9,19 @@ namespace ControleDeCinema.Aplicacao.ModuloGeneroFilme;
 
 public class GeneroFilmeAppService
 {
+    private readonly ITenantProvider tenantProvider;
     private readonly IRepositorioGeneroFilme repositorioGeneroFilme;
     private readonly IUnitOfWork unitOfWork;
     private readonly ILogger<GeneroFilmeAppService> logger;
 
     public GeneroFilmeAppService(
+        ITenantProvider tenantProvider,
         IRepositorioGeneroFilme repositorioGeneroFilme,
         IUnitOfWork unitOfWork,
         ILogger<GeneroFilmeAppService> logger
     )
     {
+        this.tenantProvider = tenantProvider;
         this.repositorioGeneroFilme = repositorioGeneroFilme;
         this.unitOfWork = unitOfWork;
         this.logger = logger;
@@ -32,6 +36,8 @@ public class GeneroFilmeAppService
 
         try
         {
+            generoFilme.UsuarioId = tenantProvider.UsuarioId.GetValueOrDefault();
+
             repositorioGeneroFilme.Cadastrar(generoFilme);
 
             unitOfWork.Commit();
@@ -134,25 +140,6 @@ public class GeneroFilmeAppService
         try
         {
             var registros = repositorioGeneroFilme.SelecionarRegistros();
-
-            return Result.Ok(registros);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(
-                ex,
-                "Ocorreu um erro durante a seleção de registros."
-            );
-
-            return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
-        }
-    }
-
-    public Result<List<GeneroFilme>> SelecionarTodos(Guid usuarioId)
-    {
-        try
-        {
-            var registros = repositorioGeneroFilme.SelecionarRegistrosPorUsuario(usuarioId);
 
             return Result.Ok(registros);
         }

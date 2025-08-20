@@ -2,7 +2,4 @@
 
 namespace ControleDeCinema.Dominio.ModuloGeneroFilme;
 
-public interface IRepositorioGeneroFilme : IRepositorio<GeneroFilme>
-{
-    List<GeneroFilme> SelecionarRegistrosPorUsuario(Guid usuarioId);
-}
+public interface IRepositorioGeneroFilme : IRepositorio<GeneroFilme>;
