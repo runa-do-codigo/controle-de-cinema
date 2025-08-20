@@ -1,11 +1,14 @@
 using ControleDeCinema.Aplicacao.ModuloAutenticacao;
 using ControleDeCinema.Aplicacao.ModuloFilme;
 using ControleDeCinema.Aplicacao.ModuloGeneroFilme;
+using ControleDeCinema.Aplicacao.ModuloSala;
 using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
+using ControleDeCinema.Dominio.ModuloSala;
 using ControleDeCinema.Infraestrutura.Orm.Compartilhado;
 using ControleDeCinema.Infraestrutura.Orm.ModuloFilme;
 using ControleDeCinema.Infraestrutura.Orm.ModuloGeneroFilme;
+using ControleDeCinema.Infraestrutura.Orm.ModuloSala;
 using ControleDeCinema.WebApp.ActionFilters;
 using ControleDeCinema.WebApp.DependencyInjection;
 using ControleDeCinema.WebApp.Orm;
@@ -21,6 +24,8 @@ public class Program
         // Configuração de serviços personalizados
         builder.Services.AddScoped<AutenticacaoAppService>();
 
+        builder.Services.AddScoped<SalaAppService>();
+        builder.Services.AddScoped<IRepositorioSala, RepositorioSalaEmOrm>();
         builder.Services.AddScoped<FilmeAppService>();
         builder.Services.AddScoped<IRepositorioFilme, RepositorioFilmeEmOrm>();
         builder.Services.AddScoped<GeneroFilmeAppService>();
