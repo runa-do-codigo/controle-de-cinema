@@ -48,18 +48,20 @@ public class AutenticacaoController : Controller
     }
 
     [HttpGet("login")]
-    public IActionResult Login()
+    public IActionResult Login(string? returnUrl = null)
     {
         if (User.Identity.IsAuthenticated)
             return RedirectToAction("Index", "Home");
 
         var loginVm = new LoginViewModel();
 
+        ViewData["ReturnUrl"] = returnUrl;
+
         return View(loginVm);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginViewModel loginVm)
+    public async Task<IActionResult> Login(LoginViewModel loginVm, string? returnUrl = null)
     {
         var resultado = await autenticacaoAppService.LoginAsync(
             loginVm.Email ?? string.Empty,
@@ -68,6 +70,9 @@ public class AutenticacaoController : Controller
 
         if (resultado.IsFailed)
             return RedirectToAction(nameof(Login));
+
+        if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            return LocalRedirect(returnUrl);
 
         return RedirectToAction(nameof(HomeController.Index), "Home");
     }
