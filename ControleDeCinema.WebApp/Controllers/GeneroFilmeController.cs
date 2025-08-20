@@ -3,6 +3,7 @@ using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace ControleDeCinema.WebApp.Controllers;
@@ -21,7 +22,11 @@ public class GeneroFilmeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var resultado = generoFilmeAppService.SelecionarTodos();
+        var claimId = User.FindFirst(ClaimTypes.NameIdentifier);
+
+        var usuarioId = Guid.Parse(claimId.Value);
+
+        var resultado = generoFilmeAppService.SelecionarTodos(usuarioId);
 
         if (resultado.IsFailed)
         {
@@ -67,7 +72,13 @@ public class GeneroFilmeController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Cadastrar(CadastrarGeneroFilmeViewModel cadastrarVM)
     {
+        var claimId = User.FindFirst(ClaimTypes.NameIdentifier);
+
+        var usuarioId = Guid.Parse(claimId.Value);
+
         var entidade = FormularioGeneroFilmeViewModel.ParaEntidade(cadastrarVM);
+
+        entidade.UsuarioId = usuarioId;
 
         var resultado = generoFilmeAppService.Cadastrar(entidade);
 

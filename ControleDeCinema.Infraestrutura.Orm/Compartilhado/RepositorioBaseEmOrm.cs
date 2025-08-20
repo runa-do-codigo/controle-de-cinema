@@ -1,4 +1,5 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
+using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infraestrutura.Orm.Compartilhado;
@@ -54,6 +55,13 @@ public class RepositorioBaseEmOrm<T> where T : EntidadeBase<T>
     public virtual List<T> SelecionarRegistros()
     {
         return registros.ToList();
+    }
+
+    public virtual List<T> SelecionarRegistrosPorUsuario(Guid usuarioId)
+    {
+        return registros
+            .Where(x => x.UsuarioId == usuarioId)
+            .ToList();
     }
 }
 

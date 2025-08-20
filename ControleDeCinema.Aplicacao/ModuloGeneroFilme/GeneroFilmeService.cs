@@ -147,4 +147,23 @@ public class GeneroFilmeAppService
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }
+
+    public Result<List<GeneroFilme>> SelecionarTodos(Guid usuarioId)
+    {
+        try
+        {
+            var registros = repositorioGeneroFilme.SelecionarRegistrosPorUsuario(usuarioId);
+
+            return Result.Ok(registros);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(
+                ex,
+                "Ocorreu um erro durante a seleção de registros."
+            );
+
+            return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
+        }
+    }
 }
