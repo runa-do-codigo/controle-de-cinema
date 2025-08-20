@@ -64,7 +64,10 @@ public class AutenticacaoAppService
 
         await userManager.AddToRoleAsync(usuario, tipoString);
 
-        return Result.Ok();
+        return await LoginAsync(
+            usuario.Email ?? string.Empty,
+            senha
+        );
     }
 
     public async Task<Result> LoginAsync(string email, string senha)

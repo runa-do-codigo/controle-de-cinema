@@ -45,14 +45,14 @@ public class AutenticacaoController : Controller
         if (resultado.IsFailed)
             return this.PreencherErrosModelState(resultado, registroVm);
 
-        return RedirectToAction(nameof(Login));
+        return RedirectToAction(nameof(HomeController.Index), "Home");
     }
 
     [HttpGet("login")]
     public IActionResult Login(string? returnUrl = null)
     {
         if (User.Identity?.IsAuthenticated ?? false)
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
 
         var loginVm = new LoginViewModel();
 
