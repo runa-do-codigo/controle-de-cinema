@@ -25,10 +25,11 @@ public static class ControllerExtensions
     {
         foreach (var erro in resultado.Errors)
         {
-            if (erro.Metadata["TipoErro"].ToString() == "RegistroDuplicado")
-            {
-                controller.ModelState.AddModelError("CadastroUnico", erro.Reasons[0].Message);
-            }
+            var chave = erro.Metadata.TryGetValue("TipoErro", out var tipo) ?
+                tipo.ToString() ?? "ErroInesperado" : "ErroInesperado";
+
+            foreach (var reason in erro.Reasons)
+                controller.ModelState.AddModelError(chave, reason.Message);
         }
 
         return controller.View(viewModel);

@@ -1,5 +1,6 @@
 ﻿using ControleDeCinema.Aplicacao.ModuloAutenticacao;
 using ControleDeCinema.Dominio.ModuloAutenticacao;
+using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ public class AutenticacaoController : Controller
     [HttpGet("registro")]
     public IActionResult Registro()
     {
-        if (User.Identity.IsAuthenticated)
+        if (User.Identity?.IsAuthenticated ?? false)
             return RedirectToAction("Index", "Home");
 
         var registroVm = new RegistroViewModel();
@@ -42,7 +43,7 @@ public class AutenticacaoController : Controller
         );
 
         if (resultado.IsFailed)
-            return RedirectToAction(nameof(Registro));
+            return this.PreencherErrosModelState(resultado, registroVm);
 
         return RedirectToAction(nameof(Login));
     }
@@ -50,7 +51,7 @@ public class AutenticacaoController : Controller
     [HttpGet("login")]
     public IActionResult Login(string? returnUrl = null)
     {
-        if (User.Identity.IsAuthenticated)
+        if (User.Identity?.IsAuthenticated ?? false)
             return RedirectToAction("Index", "Home");
 
         var loginVm = new LoginViewModel();
@@ -69,9 +70,9 @@ public class AutenticacaoController : Controller
         );
 
         if (resultado.IsFailed)
-            return RedirectToAction(nameof(Login));
+            return this.PreencherErrosModelState(resultado, loginVm);
 
-        if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+        if (Url.IsLocalUrl(returnUrl))
             return LocalRedirect(returnUrl);
 
         return RedirectToAction(nameof(HomeController.Index), "Home");

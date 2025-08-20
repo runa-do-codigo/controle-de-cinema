@@ -28,11 +28,20 @@ public class AutenticacaoAppService
 
         if (!usuarioResult.Succeeded)
         {
-            var erros = usuarioResult
-                .Errors
-                .Select(failure => failure.Description)
-                .ToList();
-
+            var erros = usuarioResult.Errors.Select(err =>
+            {
+                return err.Code switch
+                {
+                    "DuplicateUserName" => "Já existe um usuário com esse nome.",
+                    "DuplicateEmail" => "Já existe um usuário com esse e-mail.",
+                    "PasswordTooShort" => "A senha é muito curta.",
+                    "PasswordRequiresNonAlphanumeric" => "A senha deve conter pelo menos um caractere especial.",
+                    "PasswordRequiresDigit" => "A senha deve conter pelo menos um número.",
+                    "PasswordRequiresUpper" => "A senha deve conter pelo menos uma letra maiúscula.",
+                    "PasswordRequiresLower" => "A senha deve conter pelo menos uma letra minúscula.",
+                    _ => err.Description
+                };
+            }).ToList();
 
             return Result.Fail(ResultadosErro.RequisicaoInvalidaErro(erros));
         }
@@ -67,10 +76,23 @@ public class AutenticacaoAppService
             lockoutOnFailure: false
         );
 
-        if (!resultadoLogin.Succeeded)
-            return Result.Fail("Login ou senha incorretos.");
+        if (resultadoLogin.Succeeded)
+            return Result.Ok();
 
-        return Result.Ok();
+        if (resultadoLogin.IsLockedOut)
+            return Result.Fail(ResultadosErro
+                .RequisicaoInvalidaErro("Sua conta foi bloqueada temporariamente devido a muitas tentativas inválidas."));
+
+        if (resultadoLogin.IsNotAllowed)
+            return Result.Fail(ResultadosErro
+                .RequisicaoInvalidaErro("Não é permitido efetuar login. Verifique se sua conta está confirmada."));
+
+        if (resultadoLogin.RequiresTwoFactor)
+            return Result.Fail(ResultadosErro
+                .RequisicaoInvalidaErro("É necessário confirmar o login com autenticação de dois fatores."));
+
+        return Result.Fail(ResultadosErro
+            .RequisicaoInvalidaErro("Login ou senha incorretos."));
     }
 
     public async Task<Result> LogoutAsync()
