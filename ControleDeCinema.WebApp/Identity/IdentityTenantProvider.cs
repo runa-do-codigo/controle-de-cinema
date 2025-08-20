@@ -16,7 +16,6 @@ public class IdentityTenantProvider : ITenantProvider
     {
         get
         {
-            
             var claimId = contextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier);
 
             if (claimId is null)

@@ -1,5 +1,4 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
-using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infraestrutura.Orm.Compartilhado;
