@@ -1,5 +1,6 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
+using ControleDeCinema.Dominio.ModuloSessao;
 
 namespace ControleDeCinema.Dominio.ModuloFilme;
 
@@ -9,8 +10,12 @@ public class Filme : EntidadeBase<Filme>
     public int Duracao { get; set; }
     public bool Lancamento { get; set; }
     public GeneroFilme Genero { get; set; }
+    public List<Sessao> Sessoes { get; set; }
 
-    protected Filme() { }
+    protected Filme()
+    {
+        Sessoes = new List<Sessao>();
+    }
 
     public Filme(string titulo, int duracao, bool lancamento, GeneroFilme genero) : this()
     {

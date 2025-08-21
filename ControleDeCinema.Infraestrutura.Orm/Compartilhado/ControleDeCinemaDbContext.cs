@@ -3,6 +3,7 @@ using ControleDeCinema.Dominio.ModuloAutenticacao;
 using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using ControleDeCinema.Dominio.ModuloSala;
+using ControleDeCinema.Dominio.ModuloSessao;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Cargo, Guid>
     public DbSet<GeneroFilme> GenerosFilme { get; set; }
     public DbSet<Filme> Filmes { get; set; }
     public DbSet<Sala> Salas { get; set; }
+    public DbSet<Sessao> Sessoes { get; set; }
 
     public ControleDeCinemaDbContext(DbContextOptions options) : base(options)
     {
