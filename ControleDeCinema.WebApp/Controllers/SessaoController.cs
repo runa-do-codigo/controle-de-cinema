@@ -119,18 +119,6 @@ public class SessaoController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost("encerrar/{id:guid}")]
-    [Authorize(Roles = "Empresa")]
-    [ValidateAntiForgeryToken]
-    public IActionResult Encerrar(Guid id)
-    {
-        var resultado = sessaoAppService.Encerrar(id);
-        if (resultado.IsFailed)
-            return this.RedirecionarParaNotificacao(resultado);
-
-        return RedirectToAction(nameof(Detalhes), new { id });
-    }
-
     [HttpGet("excluir/{id:guid}")]
     [Authorize(Roles = "Empresa")]
     public IActionResult Excluir(Guid id)
@@ -176,19 +164,30 @@ public class SessaoController : Controller
         return View(detalhesVm);
     }
 
-    [HttpPost("vender-ingresso")]
-    [ValidateAntiForgeryToken]
-    public IActionResult VenderIngresso(ComprarIngressoViewModel venderIngressoVm)
+    [HttpGet("encerrar/{id:guid}")]
+    [Authorize(Roles = "Empresa")]
+    public IActionResult Encerrar(Guid id)
     {
-        var resultado = sessaoAppService.VenderIngresso(
-            venderIngressoVm.SessaoId,
-            venderIngressoVm.Assento,
-            venderIngressoVm.MeiaEntrada
-        );
+        var resultado = sessaoAppService.SelecionarPorId(id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado.ToResult());
 
-        return RedirectToAction(nameof(Detalhes), new { id = venderIngressoVm.SessaoId });
+        var detalhesVm = DetalhesSessaoViewModel.ParaDetalhesVm(resultado.Value);
+
+        return View(detalhesVm);
+    }
+
+    [HttpPost("encerrar/{id:guid}")]
+    [Authorize(Roles = "Empresa")]
+    [ValidateAntiForgeryToken]
+    public IActionResult EncerrarConfirmado(Guid id)
+    {
+        var resultado = sessaoAppService.Encerrar(id);
+
+        if (resultado.IsFailed)
+            return this.RedirecionarParaNotificacao(resultado);
+
+        return RedirectToAction(nameof(Detalhes), new { id });
     }
 }
