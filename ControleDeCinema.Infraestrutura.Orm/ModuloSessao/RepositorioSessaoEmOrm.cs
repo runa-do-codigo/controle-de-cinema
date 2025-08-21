@@ -13,6 +13,7 @@ public class RepositorioSessaoEmOrm : RepositorioBaseEmOrm<Sessao>, IRepositorio
         return registros
             .Include(x => x.Filme)
             .Include(x => x.Sala)
+            .Include(x => x.Ingressos)
             .FirstOrDefault(x => x.Id.Equals(idRegistro));
     }
 
@@ -21,6 +22,7 @@ public class RepositorioSessaoEmOrm : RepositorioBaseEmOrm<Sessao>, IRepositorio
         return registros
             .Include(x => x.Filme)
             .Include(x => x.Sala)
+            .Include(x => x.Ingressos)
             .ToList();
     }
 }

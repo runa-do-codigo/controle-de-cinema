@@ -178,7 +178,7 @@ public class SessaoController : Controller
 
     [HttpPost("vender-ingresso")]
     [ValidateAntiForgeryToken]
-    public IActionResult VenderIngresso(VenderIngressoViewModel venderIngressoVm)
+    public IActionResult VenderIngresso(ComprarIngressoViewModel venderIngressoVm)
     {
         var resultado = sessaoAppService.VenderIngresso(
             venderIngressoVm.SessaoId,

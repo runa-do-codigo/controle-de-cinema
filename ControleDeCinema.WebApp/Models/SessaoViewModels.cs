@@ -156,13 +156,28 @@ public class DetalhesSessaoViewModel
     }
 }
 
-public class VenderIngressoViewModel
+public class ComprarIngressoViewModel
 {
     [Required]
     public Guid SessaoId { get; set; }
+    public string Filme { get; set; }
+    public int Sala { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Assento inválido.")]
     public int Assento { get; set; }
+    public List<SelectListItem> AssentosDisponiveis { get; set; }
 
     public bool MeiaEntrada { get; set; }
+
+    public ComprarIngressoViewModel() { }
+
+    public ComprarIngressoViewModel(Sessao sessao) : this()
+    {
+        SessaoId = sessao.Id;
+        Filme = sessao.Filme.Titulo;
+        Sala = sessao.Sala.Numero;
+        AssentosDisponiveis = sessao.ObterAssentosDisponiveis()
+            .Select(a => new SelectListItem(a.ToString(), a.ToString()))
+            .ToList();
+    }
 }
