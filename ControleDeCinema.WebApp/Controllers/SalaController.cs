@@ -1,11 +1,13 @@
 ﻿using ControleDeCinema.Aplicacao.ModuloSala;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeCinema.WebApp.Controllers;
 
 [Route("salas")]
+[Authorize(Roles = "Empresa")]
 public class SalaController : Controller
 {
     private readonly SalaAppService salaAppService;

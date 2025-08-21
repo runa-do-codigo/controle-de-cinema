@@ -2,11 +2,13 @@
 using ControleDeCinema.Aplicacao.ModuloGeneroFilme;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeCinema.WebApp.Controllers;
 
 [Route("filmes")]
+[Authorize(Roles = "Empresa")]
 public class FilmeController : Controller
 {
     private readonly FilmeAppService filmeAppService;
