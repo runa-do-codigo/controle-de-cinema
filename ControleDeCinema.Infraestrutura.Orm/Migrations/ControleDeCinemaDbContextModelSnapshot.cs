@@ -213,7 +213,7 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
 
                     b.HasIndex("SessaoId");
 
-                    b.ToTable("Ingresso");
+                    b.ToTable("Ingressos");
                 });
 
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Sessao", b =>

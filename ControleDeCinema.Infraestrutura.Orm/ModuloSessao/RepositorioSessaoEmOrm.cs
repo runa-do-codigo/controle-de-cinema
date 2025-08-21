@@ -1,8 +1,31 @@
-﻿using ControleDeCinema.Dominio.ModuloSessao;
+﻿using ControleDeCinema.Dominio.ModuloAutenticacao;
+using ControleDeCinema.Dominio.ModuloSessao;
 using ControleDeCinema.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infraestrutura.Orm.ModuloSessao;
+
+public class RepositorioIngressoEmOrm : IRepositorioIngresso
+{
+    private readonly DbSet<Ingresso> registros;
+
+    public RepositorioIngressoEmOrm(ControleDeCinemaDbContext contexto)
+    {
+        registros = contexto.Ingressos;
+    }
+
+    public List<Ingresso> SelecionarRegistros(Guid usuarioId)
+    {
+        return registros
+            .IgnoreQueryFilters()
+            .Include(x => x.Sessao)
+            .ThenInclude(s => s.Filme)
+            .Include(x => x.Sessao)
+            .ThenInclude(s => s.Sala)
+            .Where(x => x.UsuarioId.Equals(usuarioId))
+            .ToList();
+    }
+}
 
 public class RepositorioSessaoEmOrm : RepositorioBaseEmOrm<Sessao>, IRepositorioSessao
 {

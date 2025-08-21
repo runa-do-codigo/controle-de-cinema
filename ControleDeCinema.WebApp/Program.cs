@@ -28,7 +28,9 @@ public class Program
         builder.Services.AddScoped<AutenticacaoAppService>();
 
         builder.Services.AddScoped<SessaoAppService>();
+        builder.Services.AddScoped<IngressoAppService>();
         builder.Services.AddScoped<IRepositorioSessao, RepositorioSessaoEmOrm>();
+        builder.Services.AddScoped<IRepositorioIngresso, RepositorioIngressoEmOrm>();
         builder.Services.AddScoped<SalaAppService>();
         builder.Services.AddScoped<IRepositorioSala, RepositorioSalaEmOrm>();
         builder.Services.AddScoped<FilmeAppService>();

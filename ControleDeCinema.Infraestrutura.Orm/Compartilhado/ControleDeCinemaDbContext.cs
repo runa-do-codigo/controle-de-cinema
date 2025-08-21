@@ -15,6 +15,7 @@ public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Cargo, Guid>
     public DbSet<Filme> Filmes { get; set; }
     public DbSet<Sala> Salas { get; set; }
     public DbSet<Sessao> Sessoes { get; set; }
+    public DbSet<Ingresso> Ingressos { get; set; }
 
     private readonly ITenantProvider? tenantProvider;
 

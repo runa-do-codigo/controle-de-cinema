@@ -1,6 +1,7 @@
 ﻿using ControleDeCinema.Aplicacao.ModuloFilme;
 using ControleDeCinema.Aplicacao.ModuloSala;
 using ControleDeCinema.Aplicacao.ModuloSessao;
+using ControleDeCinema.Dominio.ModuloSessao;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,16 +14,19 @@ namespace ControleDeCinema.WebApp.Controllers;
 public class SessaoController : Controller
 {
     private readonly SessaoAppService sessaoAppService;
+    private readonly IngressoAppService ingressoAppService;
     private readonly FilmeAppService filmeAppService;
     private readonly SalaAppService salaAppService;
 
     public SessaoController(
         SessaoAppService sessaoAppService,
+        IngressoAppService ingressoAppService,
         FilmeAppService filmeAppService,
         SalaAppService salaAppService
     )
     {
         this.sessaoAppService = sessaoAppService;
+        this.ingressoAppService = ingressoAppService;
         this.filmeAppService = filmeAppService;
         this.salaAppService = salaAppService;
     }
@@ -38,6 +42,16 @@ public class SessaoController : Controller
         var sessoesVm = new VisualizarSessoesViewModel(resultado.Value);
 
         this.ObterNotificacaoPendente();
+
+        if (User.IsInRole("Cliente"))
+        {
+            var ingressosResult = ingressoAppService.SelecionarTodos();
+
+            if (ingressosResult.IsFailed)
+                return this.RedirecionarParaNotificacaoHome(ingressosResult.ToResult());
+
+            ViewData["Ingressos"] = ingressosResult.Value;
+        }
 
         return View(sessoesVm);
     }

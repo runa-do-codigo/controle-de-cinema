@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -6,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleDeCinema.Infraestrutura.Orm.Migrations
 {
     /// <inheritdoc />
-    public partial class Add_Auth : Migration
+    public partial class Add_Config_Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +49,33 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GenerosFilme",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Descricao = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GenerosFilme", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Salas",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Numero = table.Column<int>(type: "integer", nullable: false),
+                    Capacidade = table.Column<int>(type: "integer", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Salas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +184,74 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Filmes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Titulo = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Duracao = table.Column<int>(type: "integer", nullable: false),
+                    Lancamento = table.Column<bool>(type: "boolean", nullable: false),
+                    GeneroId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Filmes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Filmes_GenerosFilme_GeneroId",
+                        column: x => x.GeneroId,
+                        principalTable: "GenerosFilme",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sessoes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Inicio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    NumeroMaximoIngressos = table.Column<int>(type: "integer", nullable: false),
+                    Encerrada = table.Column<bool>(type: "boolean", nullable: false),
+                    FilmeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SalaId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sessoes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sessoes_Filmes_FilmeId",
+                        column: x => x.FilmeId,
+                        principalTable: "Filmes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Sessoes_Salas_SalaId",
+                        column: x => x.SalaId,
+                        principalTable: "Salas",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ingressos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    MeiaEntrada = table.Column<bool>(type: "boolean", nullable: false),
+                    NumeroAssento = table.Column<int>(type: "integer", nullable: false),
+                    SessaoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingressos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ingressos_Sessoes_SessaoId",
+                        column: x => x.SessaoId,
+                        principalTable: "Sessoes",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -192,6 +288,61 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Filmes_GeneroId",
+                table: "Filmes",
+                column: "GeneroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Filmes_Id",
+                table: "Filmes",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenerosFilme_Id",
+                table: "GenerosFilme",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingressos_Id",
+                table: "Ingressos",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingressos_SessaoId",
+                table: "Ingressos",
+                column: "SessaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Salas_Id",
+                table: "Salas",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sessoes_FilmeId",
+                table: "Sessoes",
+                column: "FilmeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sessoes_Id",
+                table: "Sessoes",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sessoes_Id_Inicio",
+                table: "Sessoes",
+                columns: new[] { "Id", "Inicio" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sessoes_SalaId",
+                table: "Sessoes",
+                column: "SalaId");
         }
 
         /// <inheritdoc />
@@ -213,10 +364,25 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Ingressos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Sessoes");
+
+            migrationBuilder.DropTable(
+                name: "Filmes");
+
+            migrationBuilder.DropTable(
+                name: "Salas");
+
+            migrationBuilder.DropTable(
+                name: "GenerosFilme");
         }
     }
 }
