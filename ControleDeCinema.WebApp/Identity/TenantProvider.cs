@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace ControleDeCinema.WebApp.Identity;
 
-public class TenantProvider(IHttpContextAccessor contextAccessor) : ITenantProvider
+public class IdentityTenantProvider(IHttpContextAccessor contextAccessor) : ITenantProvider
 {
     public Guid? UsuarioId
     {

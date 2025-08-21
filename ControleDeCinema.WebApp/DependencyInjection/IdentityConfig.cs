@@ -10,7 +10,7 @@ public static class IdentityConfig
 {
     public static void AddIdentityProviderConfig(this IServiceCollection services)
     {
-        services.AddScoped<ITenantProvider, TenantProvider>();
+        services.AddScoped<ITenantProvider, IdentityTenantProvider>();
 
         services.AddIdentity<Usuario, Cargo>(options =>
         {
