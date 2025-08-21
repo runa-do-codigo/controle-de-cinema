@@ -213,6 +213,8 @@ public class SessaoAppService
 
             var ingresso = sessao.GerarIngresso(assento, meiaEntrada);
 
+            ingresso.UsuarioId = tenantProvider.UsuarioId.GetValueOrDefault();
+
             unitOfWork.Commit();
 
             return Result.Ok(ingresso);

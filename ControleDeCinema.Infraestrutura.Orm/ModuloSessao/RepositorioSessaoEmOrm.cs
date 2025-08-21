@@ -11,6 +11,7 @@ public class RepositorioSessaoEmOrm : RepositorioBaseEmOrm<Sessao>, IRepositorio
     public override Sessao? SelecionarRegistroPorId(Guid idRegistro)
     {
         return registros
+            .IgnoreQueryFilters()
             .Include(x => x.Filme)
             .Include(x => x.Sala)
             .Include(x => x.Ingressos)
