@@ -2,44 +2,43 @@
 using ControleDeCinema.Aplicacao.Compartilhado;
 using ControleDeCinema.Dominio.ModuloAutenticacao;
 using ControleDeCinema.Dominio.ModuloFilme;
-using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using FluentResults;
 using Microsoft.Extensions.Logging;
 
-namespace ControleDeCinema.Aplicacao.ModuloGeneroFilme;
+namespace ControleDeCinema.Aplicacao.ModuloFilme;
 
-public class GeneroFilmeAppService
+public class FilmeAppService
 {
     private readonly ITenantProvider tenantProvider;
-    private readonly IRepositorioGeneroFilme repositorioGeneroFilme;
+    private readonly IRepositorioFilme repositorioFilme;
     private readonly IUnitOfWork unitOfWork;
-    private readonly ILogger<GeneroFilmeAppService> logger;
+    private readonly ILogger<FilmeAppService> logger;
 
-    public GeneroFilmeAppService(
+    public FilmeAppService(
         ITenantProvider tenantProvider,
-        IRepositorioGeneroFilme repositorioGeneroFilme,
+        IRepositorioFilme repositorioFilme,
         IUnitOfWork unitOfWork,
-        ILogger<GeneroFilmeAppService> logger
+        ILogger<FilmeAppService> logger
     )
     {
         this.tenantProvider = tenantProvider;
-        this.repositorioGeneroFilme = repositorioGeneroFilme;
+        this.repositorioFilme = repositorioFilme;
         this.unitOfWork = unitOfWork;
         this.logger = logger;
     }
 
-    public Result Cadastrar(GeneroFilme generoFilme)
+    public Result Cadastrar(Filme filme)
     {
-        var registros = repositorioGeneroFilme.SelecionarRegistros();
+        var registros = repositorioFilme.SelecionarRegistros();
 
-        if (registros.Any(i => i.Descricao.Equals(generoFilme.Descricao)))
-            return Result.Fail(ResultadosErro.RegistroDuplicadoErro("Já existe um gênero de filme registrado com esta descrição."));
+        if (registros.Any(i => i.Titulo.Equals(filme.Titulo)))
+            return Result.Fail(ResultadosErro.RegistroDuplicadoErro("Já existe um filme registrado com este título."));
 
         try
         {
-            generoFilme.UsuarioId = tenantProvider.UsuarioId.GetValueOrDefault();
+            filme.UsuarioId = tenantProvider.UsuarioId.GetValueOrDefault();
 
-            repositorioGeneroFilme.Cadastrar(generoFilme);
+            repositorioFilme.Cadastrar(filme);
 
             unitOfWork.Commit();
 
@@ -52,23 +51,23 @@ public class GeneroFilmeAppService
             logger.LogError(
                 ex,
                 "Ocorreu um erro durante o registro de {@Registro}.",
-                generoFilme
+                filme
             );
 
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }
 
-    public Result Editar(Guid id, GeneroFilme generoFilmeEditado)
+    public Result Editar(Guid id, Filme FilmeEditado)
     {
-        var registros = repositorioGeneroFilme.SelecionarRegistros();
+        var registros = repositorioFilme.SelecionarRegistros();
 
-        if (registros.Any(i => !i.Id.Equals(id) && i.Descricao.Equals(generoFilmeEditado.Descricao)))
-            return Result.Fail(ResultadosErro.RegistroDuplicadoErro("Já existe um gênero de filme registrado com esta descrição."));
+        if (registros.Any(i => !i.Id.Equals(id) && i.Titulo.Equals(FilmeEditado.Titulo)))
+            return Result.Fail(ResultadosErro.RegistroDuplicadoErro("Já existe um filme registrado com este título."));
 
         try
         {
-            repositorioGeneroFilme.Editar(id, generoFilmeEditado);
+            repositorioFilme.Editar(id, FilmeEditado);
 
             unitOfWork.Commit();
 
@@ -81,7 +80,7 @@ public class GeneroFilmeAppService
             logger.LogError(
                 ex,
                 "Ocorreu um erro durante a edição do registro {@Registro}.",
-                generoFilmeEditado
+                FilmeEditado
             );
 
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
@@ -92,7 +91,7 @@ public class GeneroFilmeAppService
     {
         try
         {
-            repositorioGeneroFilme.Excluir(id);
+            repositorioFilme.Excluir(id);
 
             unitOfWork.Commit();
 
@@ -113,11 +112,11 @@ public class GeneroFilmeAppService
         }
     }
 
-    public Result<GeneroFilme> SelecionarPorId(Guid id)
+    public Result<Filme> SelecionarPorId(Guid id)
     {
         try
         {
-            var registroSelecionado = repositorioGeneroFilme.SelecionarRegistroPorId(id);
+            var registroSelecionado = repositorioFilme.SelecionarRegistroPorId(id);
 
             if (registroSelecionado is null)
                 return Result.Fail(ResultadosErro.RegistroNaoEncontradoErro(id));
@@ -136,11 +135,11 @@ public class GeneroFilmeAppService
         }
     }
 
-    public Result<List<GeneroFilme>> SelecionarTodos()
+    public Result<List<Filme>> SelecionarTodos()
     {
         try
         {
-            var registros = repositorioGeneroFilme.SelecionarRegistros();
+            var registros = repositorioFilme.SelecionarRegistros();
 
             return Result.Ok(registros);
         }

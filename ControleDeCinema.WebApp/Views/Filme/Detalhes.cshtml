@@ -1,0 +1,42 @@
+﻿@model DetalhesFilmeViewModel;
+
+@{
+    ViewBag.Titulo = "Detalhes do Filme";
+}
+
+<hr />
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+
+        <div class="card rounded-4 border-0">
+            <div class="card-body p-md-5">
+                <h3>Detalhes</h3>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="Titulo" class="control-label fs-5">Título:</label>
+                    <input name="Titulo" class="form-control" value="@Model.Titulo" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="Duracao" class="control-label fs-5">Duracao:</label>
+                    <input name="Duracao" class="form-control" value="@Model.Duracao min" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="Lancamento" class="control-label fs-5">Lançamento:</label>
+                    <input name="Lancamento" class="form-control" value="@(Model.Lancamento ? "Sim" : "Não")" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="Genero" class="control-label fs-5">Gênero:</label>
+                    <input name="Genero" class="form-control" value="@Model.Genero" readonly disabled />
+                </div>
+
+                <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+                    <a asp-action="Index">Voltar para a listagem</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

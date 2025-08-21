@@ -1,6 +1,9 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
 using ControleDeCinema.Dominio.ModuloAutenticacao;
+using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
+using ControleDeCinema.Dominio.ModuloSala;
+using ControleDeCinema.Dominio.ModuloSessao;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +12,10 @@ namespace ControleDeCinema.Infraestrutura.Orm.Compartilhado;
 public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Cargo, Guid>, IUnitOfWork
 {
     public DbSet<GeneroFilme> GenerosFilme { get; set; }
+    public DbSet<Filme> Filmes { get; set; }
+    public DbSet<Sala> Salas { get; set; }
+    public DbSet<Sessao> Sessoes { get; set; }
+    public DbSet<Ingresso> Ingressos { get; set; }
 
     private readonly ITenantProvider? tenantProvider;
 
@@ -22,7 +29,19 @@ public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Cargo, Guid>
         if (tenantProvider is not null)
         {
             modelBuilder.Entity<GeneroFilme>()
-                .HasQueryFilter(x => x.UsuarioId == tenantProvider.UsuarioId.GetValueOrDefault());
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Filme>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Sala>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Sessao>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Ingresso>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
         }
 
         var assembly = typeof(ControleDeCinemaDbContext).Assembly;

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleDeCinema.Infraestrutura.Orm.Migrations
 {
     [DbContext(typeof(ControleDeCinemaDbContext))]
-    [Migration("20250819185023_Add_Auth")]
-    partial class Add_Auth
+    [Migration("20250821163500_Add_Config_Inicial")]
+    partial class Add_Config_Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,6 +117,38 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloFilme.Filme", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Duracao")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("GeneroId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Lancamento")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneroId");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("Filmes");
+                });
+
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloGeneroFilme.GeneroFilme", b =>
                 {
                     b.Property<Guid>("Id")
@@ -127,12 +159,101 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
                         .IsUnique();
 
                     b.ToTable("GenerosFilme");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSala.Sala", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Capacidade")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("Salas");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Ingresso", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("MeiaEntrada")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("NumeroAssento")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("SessaoId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SessaoId");
+
+                    b.ToTable("Ingressos");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Sessao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Encerrada")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("FilmeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Inicio")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("NumeroMaximoIngressos")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("SalaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilmeId");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("SalaId");
+
+                    b.HasIndex("Id", "Inicio");
+
+                    b.ToTable("Sessoes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -238,6 +359,47 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloFilme.Filme", b =>
+                {
+                    b.HasOne("ControleDeCinema.Dominio.ModuloGeneroFilme.GeneroFilme", "Genero")
+                        .WithMany("Filmes")
+                        .HasForeignKey("GeneroId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Genero");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Ingresso", b =>
+                {
+                    b.HasOne("ControleDeCinema.Dominio.ModuloSessao.Sessao", "Sessao")
+                        .WithMany("Ingressos")
+                        .HasForeignKey("SessaoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Sessao");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Sessao", b =>
+                {
+                    b.HasOne("ControleDeCinema.Dominio.ModuloFilme.Filme", "Filme")
+                        .WithMany("Sessoes")
+                        .HasForeignKey("FilmeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ControleDeCinema.Dominio.ModuloSala.Sala", "Sala")
+                        .WithMany()
+                        .HasForeignKey("SalaId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Filme");
+
+                    b.Navigation("Sala");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("ControleDeCinema.Dominio.ModuloAutenticacao.Cargo", null)
@@ -287,6 +449,21 @@ namespace ControleDeCinema.Infraestrutura.Orm.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloFilme.Filme", b =>
+                {
+                    b.Navigation("Sessoes");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloGeneroFilme.GeneroFilme", b =>
+                {
+                    b.Navigation("Filmes");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Sessao", b =>
+                {
+                    b.Navigation("Ingressos");
                 });
 #pragma warning restore 612, 618
         }

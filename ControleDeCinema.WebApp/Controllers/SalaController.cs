@@ -1,4 +1,4 @@
-﻿using ControleDeCinema.Aplicacao.ModuloGeneroFilme;
+﻿using ControleDeCinema.Aplicacao.ModuloSala;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,26 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeCinema.WebApp.Controllers;
 
-[Route("generos")]
+[Route("salas")]
 [Authorize(Roles = "Empresa")]
-public class GeneroFilmeController : Controller
+public class SalaController : Controller
 {
-    private readonly GeneroFilmeAppService generoFilmeAppService;
+    private readonly SalaAppService salaAppService;
 
-    public GeneroFilmeController(GeneroFilmeAppService generoFilmeAppService)
+    public SalaController(SalaAppService salaAppService)
     {
-        this.generoFilmeAppService = generoFilmeAppService;
+        this.salaAppService = salaAppService;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        var resultado = generoFilmeAppService.SelecionarTodos();
+        var resultado = salaAppService.SelecionarTodos();
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacaoHome(resultado.ToResult());
 
-        var visualizarVM = new VisualizarGenerosFilmeViewModel(resultado.Value);
+        var visualizarVM = new VisualizarSalasViewModel(resultado.Value);
 
         this.ObterNotificacaoPendente();
 
@@ -35,18 +35,18 @@ public class GeneroFilmeController : Controller
     [HttpGet("cadastrar")]
     public IActionResult Cadastrar()
     {
-        var cadastrarVM = new CadastrarGeneroFilmeViewModel();
+        var cadastrarVM = new CadastrarSalaViewModel();
 
         return View(cadastrarVM);
     }
 
     [HttpPost("cadastrar")]
     [ValidateAntiForgeryToken]
-    public IActionResult Cadastrar(CadastrarGeneroFilmeViewModel cadastrarVM)
+    public IActionResult Cadastrar(CadastrarSalaViewModel cadastrarVM)
     {
-        var entidade = FormularioGeneroFilmeViewModel.ParaEntidade(cadastrarVM);
+        var entidade = FormularioSalaViewModel.ParaEntidade(cadastrarVM);
 
-        var resultado = generoFilmeAppService.Cadastrar(entidade);
+        var resultado = salaAppService.Cadastrar(entidade);
 
         if (resultado.IsFailed)
             return this.PreencherErrosModelState(resultado, cadastrarVM);
@@ -57,14 +57,15 @@ public class GeneroFilmeController : Controller
     [HttpGet("editar/{id:guid}")]
     public IActionResult Editar(Guid id)
     {
-        var resultado = generoFilmeAppService.SelecionarPorId(id);
+        var resultado = salaAppService.SelecionarPorId(id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado.ToResult());
 
-        var editarVM = new EditarGeneroFilmeViewModel(
+        var editarVM = new EditarSalaViewModel(
             id,
-            resultado.Value.Descricao
+            resultado.Value.Numero,
+            resultado.Value.Capacidade
         );
 
         return View(editarVM);
@@ -72,11 +73,11 @@ public class GeneroFilmeController : Controller
 
     [HttpPost("editar/{id:guid}")]
     [ValidateAntiForgeryToken]
-    public IActionResult Editar(Guid id, EditarGeneroFilmeViewModel editarVM)
+    public IActionResult Editar(Guid id, EditarSalaViewModel editarVM)
     {
-        var entidadeEditada = FormularioGeneroFilmeViewModel.ParaEntidade(editarVM);
+        var entidadeEditada = FormularioSalaViewModel.ParaEntidade(editarVM);
 
-        var resultado = generoFilmeAppService.Editar(id, entidadeEditada);
+        var resultado = salaAppService.Editar(id, entidadeEditada);
 
         if (resultado.IsFailed)
             return this.PreencherErrosModelState(resultado, editarVM);
@@ -87,14 +88,14 @@ public class GeneroFilmeController : Controller
     [HttpGet("excluir/{id:guid}")]
     public IActionResult Excluir(Guid id)
     {
-        var resultado = generoFilmeAppService.SelecionarPorId(id);
+        var resultado = salaAppService.SelecionarPorId(id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado.ToResult());
 
-        var excluirVM = new ExcluirGeneroFilmeViewModel(
+        var excluirVM = new ExcluirSalaViewModel(
             resultado.Value.Id,
-            resultado.Value.Descricao
+            resultado.Value.Numero
         );
 
         return View(excluirVM);
@@ -102,9 +103,9 @@ public class GeneroFilmeController : Controller
 
     [HttpPost("excluir/{id:guid}")]
     [ValidateAntiForgeryToken]
-    public IActionResult Excluir(ExcluirGeneroFilmeViewModel excluirVm)
+    public IActionResult Excluir(ExcluirSalaViewModel excluirVm)
     {
-        var resultado = generoFilmeAppService.Excluir(excluirVm.Id);
+        var resultado = salaAppService.Excluir(excluirVm.Id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado);
@@ -115,12 +116,12 @@ public class GeneroFilmeController : Controller
     [HttpGet("detalhes/{id:guid}")]
     public IActionResult Detalhes(Guid id)
     {
-        var resultado = generoFilmeAppService.SelecionarPorId(id);
+        var resultado = salaAppService.SelecionarPorId(id);
 
         if (resultado.IsFailed)
             return this.RedirecionarParaNotificacao(resultado.ToResult());
 
-        var detalhesVm = DetalhesGeneroFilmeViewModel.ParaDetalhesVm(resultado.Value);
+        var detalhesVm = DetalhesSalaViewModel.ParaDetalhesVm(resultado.Value);
 
         return View(detalhesVm);
     }
