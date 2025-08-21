@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ControleDeCinema.Dominio.ModuloFilme.Filme">
+    <Position X="1" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAKAAAAAQAAAAAIAAAAAABA=</HashCode>
+      <FileName>ModuloFilme\Filme.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Genero" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sessoes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ControleDeCinema.Dominio.ModuloAutenticacao.Usuario">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModuloAutenticacao\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Dominio.ModuloAutenticacao.InformacoesUsuario">
+    <Position X="8.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModuloAutenticacao\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Dominio.ModuloGeneroFilme.GeneroFilme">
+    <Position X="0.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAACAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModuloGeneroFilme\GeneroFilme.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Filmes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ControleDeCinema.Dominio.ModuloSala.Sala">
+    <Position X="3.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABCAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>ModuloSala\Sala.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControleDeCinema.Dominio.ModuloSessao.Ingresso">
+    <Position X="7.25" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAACAAAAAAEAAAQAAAAAAAAA=</HashCode>
+      <FileName>ModuloSessao\Ingresso.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Sessao" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ControleDeCinema.Dominio.ModuloSessao.Sessao">
+    <Position X="4.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAKAAAACAAAABAAAACAAAggAgAAAAAAAIAABAg=</HashCode>
+      <FileName>ModuloSessao\Sessao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Filme" />
+      <Property Name="Sala" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Ingressos" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="ControleDeCinema.Dominio.ModuloAutenticacao.TipoUsuario" Collapsed="true">
+    <Position X="10.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModuloAutenticacao\TipoUsuario.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
