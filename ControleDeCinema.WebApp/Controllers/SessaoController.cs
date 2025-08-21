@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControleDeCinema.WebApp.Controllers;
 
 [Route("sessoes")]
-[Authorize(Roles = "Empresa")]
+[Authorize]
 public class SessaoController : Controller
 {
     private readonly SessaoAppService sessaoAppService;
@@ -43,6 +43,7 @@ public class SessaoController : Controller
     }
 
     [HttpGet("cadastrar")]
+    [Authorize(Roles = "Empresa")]
     public IActionResult Cadastrar()
     {
         var filmesDisponiveis = filmeAppService.SelecionarTodos().ValueOrDefault;
@@ -50,12 +51,13 @@ public class SessaoController : Controller
 
         var cadastrarVm = new CadastrarSessaoViewModel(filmesDisponiveis, salasDisponiveis);
 
-        cadastrarVm.Inicio = DateTime.Now.AddHours(1);
+        cadastrarVm.Inicio = DateTime.UtcNow.Date;
 
         return View(cadastrarVm);
     }
 
     [HttpPost("cadastrar")]
+    [Authorize(Roles = "Empresa")]
     [ValidateAntiForgeryToken]
     public IActionResult Cadastrar(CadastrarSessaoViewModel vm)
     {
@@ -63,6 +65,8 @@ public class SessaoController : Controller
         var salasDisponiveis = salaAppService.SelecionarTodos().ValueOrDefault;
 
         var entidade = FormularioSessaoViewModel.ParaEntidade(vm, filmesDisponiveis, salasDisponiveis);
+        
+        entidade.Inicio = entidade.Inicio.ToUniversalTime();
 
         var resultado = sessaoAppService.Cadastrar(entidade);
 
@@ -73,6 +77,7 @@ public class SessaoController : Controller
     }
 
     [HttpGet("editar/{id:guid}")]
+    [Authorize(Roles = "Empresa")]
     public IActionResult Editar(Guid id)
     {
         var resultado = sessaoAppService.SelecionarPorId(id);
@@ -85,7 +90,7 @@ public class SessaoController : Controller
 
         var editarVm = new EditarSessaoViewModel(
             resultado.Value.Id,
-            resultado.Value.Inicio,
+            resultado.Value.Inicio.ToLocalTime(),
             resultado.Value.NumeroMaximoIngressos,
             filmesDisponiveis,
             salasDisponiveis
@@ -95,6 +100,7 @@ public class SessaoController : Controller
     }
 
     [HttpPost("editar/{id:guid}")]
+    [Authorize(Roles = "Empresa")]
     [ValidateAntiForgeryToken]
     public IActionResult Editar(Guid id, EditarSessaoViewModel vm)
     {
@@ -102,6 +108,8 @@ public class SessaoController : Controller
         var salasDisponiveis = salaAppService.SelecionarTodos().ValueOrDefault;
 
         var entidade = FormularioSessaoViewModel.ParaEntidade(vm, filmesDisponiveis, salasDisponiveis);
+
+        entidade.Inicio = entidade.Inicio.ToUniversalTime();
 
         var resultado = sessaoAppService.Editar(id, entidade);
 
@@ -112,6 +120,7 @@ public class SessaoController : Controller
     }
 
     [HttpPost("encerrar/{id:guid}")]
+    [Authorize(Roles = "Empresa")]
     [ValidateAntiForgeryToken]
     public IActionResult Encerrar(Guid id)
     {
@@ -123,6 +132,7 @@ public class SessaoController : Controller
     }
 
     [HttpGet("excluir/{id:guid}")]
+    [Authorize(Roles = "Empresa")]
     public IActionResult Excluir(Guid id)
     {
         var resultado = sessaoAppService.SelecionarPorId(id);
@@ -141,6 +151,7 @@ public class SessaoController : Controller
     }
 
     [HttpPost("excluir/{id:guid}")]
+    [Authorize(Roles = "Empresa")]
     [ValidateAntiForgeryToken]
     public IActionResult Excluir(ExcluirSessaoViewModel vm)
     {

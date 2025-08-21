@@ -9,6 +9,7 @@ namespace ControleDeCinema.WebApp.Models;
 public abstract class FormularioSessaoViewModel
 {
     [Required(ErrorMessage = "Informe a data/hora de início.")]
+    [DataType(DataType.DateTime)]
     public DateTime Inicio { get; set; }
 
     [Range(1, 2000, ErrorMessage = "O número máximo de ingressos deve ser ao menos 1.")]
@@ -17,7 +18,7 @@ public abstract class FormularioSessaoViewModel
 
     [Required(ErrorMessage = "Selecione um filme.")]
     public Guid FilmeId { get; set; }
-    public List<SelectListItem>? Filmes { get; set; }
+    public List<SelectListItem>? FilmesDisponiveis { get; set; }
 
     [Required(ErrorMessage = "Selecione uma sala.")]
     public Guid SalaId { get; set; }
@@ -26,7 +27,8 @@ public abstract class FormularioSessaoViewModel
     public static Sessao ParaEntidade(
         FormularioSessaoViewModel formularioVm,
         List<Filme> filmesDisponiveis,
-        List<Sala> salasDisponiveis)
+        List<Sala> salasDisponiveis
+    )
     {
         var filme = filmesDisponiveis.Find(f => f.Id == formularioVm.FilmeId)
                     ?? throw new ArgumentException("Filme inválido.");
@@ -49,7 +51,7 @@ public class CadastrarSessaoViewModel : FormularioSessaoViewModel
 
     public CadastrarSessaoViewModel(List<Filme> filmes, List<Sala> salas)
     {
-        Filmes = filmes
+        FilmesDisponiveis = filmes
             .Select(f => new SelectListItem(f.Titulo, f.Id.ToString()))
             .ToList();
 
@@ -77,7 +79,7 @@ public class EditarSessaoViewModel : FormularioSessaoViewModel
         Inicio = inicio;
         NumeroMaximoIngressos = maxIngressos;
 
-        Filmes = filmes
+        FilmesDisponiveis = filmes
             .Select(f => new SelectListItem(f.Titulo, f.Id.ToString()))
             .ToList();
 
@@ -145,7 +147,7 @@ public class DetalhesSessaoViewModel
     {
         return new DetalhesSessaoViewModel(
             s.Id,
-            s.Inicio,
+            s.Inicio.ToLocalTime(),
             s.Filme?.Titulo ?? string.Empty,
             s.Sala?.Numero ?? 0,
             s.Encerrada,
