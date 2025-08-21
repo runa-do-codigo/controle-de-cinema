@@ -16,12 +16,33 @@ public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Cargo, Guid>
     public DbSet<Sala> Salas { get; set; }
     public DbSet<Sessao> Sessoes { get; set; }
 
-    public ControleDeCinemaDbContext(DbContextOptions options) : base(options)
+    private readonly ITenantProvider? tenantProvider;
+
+    public ControleDeCinemaDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null) : base(options)
     {
+        this.tenantProvider = tenantProvider;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        if (tenantProvider is not null)
+        {
+            modelBuilder.Entity<GeneroFilme>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Filme>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Sala>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Sessao>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+
+            modelBuilder.Entity<Ingresso>()
+                .HasQueryFilter(x => x.UsuarioId.Equals(tenantProvider.UsuarioId));
+        }
+
         var assembly = typeof(ControleDeCinemaDbContext).Assembly;
 
         modelBuilder.ApplyConfigurationsFromAssembly(assembly);

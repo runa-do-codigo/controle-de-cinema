@@ -20,9 +20,21 @@ public class RepositorioSessaoEmOrm : RepositorioBaseEmOrm<Sessao>, IRepositorio
     public override List<Sessao> SelecionarRegistros()
     {
         return registros
+            .IgnoreQueryFilters()
             .Include(x => x.Filme)
             .Include(x => x.Sala)
             .Include(x => x.Ingressos)
+            .ToList();
+    }
+
+    public List<Sessao> SelecionarRegistrosDoUsuario(Guid usuarioId)
+    {
+        return registros
+            .IgnoreQueryFilters()
+            .Include(x => x.Filme)
+            .Include(x => x.Sala)
+            .Include(x => x.Ingressos)
+            .Where(x => x.UsuarioId.Equals(usuarioId))
             .ToList();
     }
 }

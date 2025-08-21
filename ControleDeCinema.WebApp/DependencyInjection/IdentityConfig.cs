@@ -1,5 +1,6 @@
 ﻿using ControleDeCinema.Dominio.ModuloAutenticacao;
 using ControleDeCinema.Infraestrutura.Orm.Compartilhado;
+using ControleDeCinema.WebApp.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 
@@ -9,6 +10,8 @@ public static class IdentityConfig
 {
     public static void AddIdentityProviderConfig(this IServiceCollection services)
     {
+        services.AddScoped<ITenantProvider, TenantProvider>();
+
         services.AddIdentity<Usuario, Cargo>(options =>
         {
             options.User.RequireUniqueEmail = true;

@@ -1,5 +1,6 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
 using ControleDeCinema.Aplicacao.Compartilhado;
+using ControleDeCinema.Dominio.ModuloAutenticacao;
 using ControleDeCinema.Dominio.ModuloFilme;
 using FluentResults;
 using Microsoft.Extensions.Logging;
@@ -8,31 +9,36 @@ namespace ControleDeCinema.Aplicacao.ModuloFilme;
 
 public class FilmeAppService
 {
+    private readonly ITenantProvider tenantProvider;
     private readonly IRepositorioFilme repositorioFilme;
     private readonly IUnitOfWork unitOfWork;
     private readonly ILogger<FilmeAppService> logger;
 
     public FilmeAppService(
+        ITenantProvider tenantProvider,
         IRepositorioFilme repositorioFilme,
         IUnitOfWork unitOfWork,
         ILogger<FilmeAppService> logger
     )
     {
+        this.tenantProvider = tenantProvider;
         this.repositorioFilme = repositorioFilme;
         this.unitOfWork = unitOfWork;
         this.logger = logger;
     }
 
-    public Result Cadastrar(Filme Filme)
+    public Result Cadastrar(Filme filme)
     {
         var registros = repositorioFilme.SelecionarRegistros();
 
-        if (registros.Any(i => i.Titulo.Equals(Filme.Titulo)))
+        if (registros.Any(i => i.Titulo.Equals(filme.Titulo)))
             return Result.Fail(ResultadosErro.RegistroDuplicadoErro("Já existe um filme registrado com este título."));
 
         try
         {
-            repositorioFilme.Cadastrar(Filme);
+            filme.UsuarioId = tenantProvider.UsuarioId.GetValueOrDefault();
+
+            repositorioFilme.Cadastrar(filme);
 
             unitOfWork.Commit();
 
@@ -45,7 +51,7 @@ public class FilmeAppService
             logger.LogError(
                 ex,
                 "Ocorreu um erro durante o registro de {@Registro}.",
-                Filme
+                filme
             );
 
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));

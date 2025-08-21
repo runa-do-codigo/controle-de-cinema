@@ -1,5 +1,7 @@
 ﻿using ControledeCinema.Dominio.Compartilhado;
 using ControleDeCinema.Aplicacao.Compartilhado;
+using ControleDeCinema.Dominio.ModuloAutenticacao;
+using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using ControleDeCinema.Dominio.ModuloSala;
 using FluentResults;
 using Microsoft.Extensions.Logging;
@@ -8,16 +10,19 @@ namespace ControleDeCinema.Aplicacao.ModuloSala;
 
 public class SalaAppService
 {
+    private readonly ITenantProvider tenantProvider;
     private readonly IRepositorioSala repositorioSala;
     private readonly IUnitOfWork unitOfWork;
     private readonly ILogger<SalaAppService> logger;
 
     public SalaAppService(
+        ITenantProvider tenantProvider,
         IRepositorioSala repositorioSala,
         IUnitOfWork unitOfWork,
         ILogger<SalaAppService> logger
     )
     {
+        this.tenantProvider = tenantProvider;
         this.repositorioSala = repositorioSala;
         this.unitOfWork = unitOfWork;
         this.logger = logger;
@@ -32,6 +37,8 @@ public class SalaAppService
 
         try
         {
+            sala.UsuarioId = tenantProvider.UsuarioId.GetValueOrDefault();
+
             repositorioSala.Cadastrar(sala);
 
             unitOfWork.Commit();
