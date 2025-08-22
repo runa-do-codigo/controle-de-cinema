@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.WebApp", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Aplicacao", "ControleDeCinema.Aplicacao\ControleDeCinema.Aplicacao.csproj", "{EAE3E615-3E4F-4EC0-8849-D69EF8746A21}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Testes", "4.Testes", "{EB7C44F3-3774-4CD3-9A0C-A2777AC19811}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4", "4", "{EB7C44F3-3774-4CD3-9A0C-A2777AC19811}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Testes.Integracao", "ControleDeCinema.Testes.Integracao\ControleDeCinema.Testes.Integracao.csproj", "{386EFA10-8885-442E-A044-4000A64F9EF2}"
 EndProject
