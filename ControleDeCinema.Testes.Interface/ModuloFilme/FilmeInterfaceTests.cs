@@ -17,6 +17,9 @@ public sealed class FilmeInterfaceTests : TestFixture
         indexPageObject
             .ClickCadastrar()
             .PreencherNome("O Mano")
+            .PreencherDuracao(129)  
+            .PreencherLancamento(true)
+            .SelecionarGenero("Suspense")
             .Confirmar();
 
         // Assert
@@ -33,12 +36,18 @@ public sealed class FilmeInterfaceTests : TestFixture
         indexPageObject
             .ClickCadastrar()
             .PreencherNome("O Mano")
+            .PreencherDuracao(129)  
+            .PreencherLancamento(true)
+            .SelecionarGenero("Suspense")
             .Confirmar();
 
         // Act
         indexPageObject
             .ClickEditar()
             .PreencherNome("O Mano Editada")
+            .PreencherDuracao(109)  
+            .PreencherLancamento(false)
+            .SelecionarGenero("Terror")
             .Confirmar();
 
         // Assert
@@ -55,6 +64,9 @@ public sealed class FilmeInterfaceTests : TestFixture
         indexPageObject
             .ClickCadastrar()
             .PreencherNome("O Mano")
+            .PreencherDuracao(129)  
+            .PreencherLancamento(true)
+            .SelecionarGenero("Suspense")
             .Confirmar();
 
         // Act
