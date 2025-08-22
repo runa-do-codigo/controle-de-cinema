@@ -17,11 +17,25 @@ public class SalaFormPageObject
         wait.Until(d => d.FindElement(By.CssSelector("form")).Displayed);
     }
 
-    public SalaFormPageObject PreencherNome(string nome)
+    public SalaFormPageObject PreencherNumero(int numeroSala)
     {
-        var inputNome = driver?.FindElement(By.Id("Nome"));
-        inputNome?.Clear();
-        inputNome?.SendKeys(nome);
+        var inputNumero = driver?.FindElement(By.Id("Numero"));
+        inputNumero?.Clear();
+        inputNumero?.SendKeys(numeroSala.ToString());
+
+        return this;
+    }
+
+    public SalaFormPageObject PreencherCapacidade(int capacidade)
+    {
+        wait.Until(d =>
+            d.FindElement(By.Id("Capacidade")).Displayed &&
+            d.FindElement(By.Id("Capacidade")).Enabled
+        );
+
+        var input = driver.FindElement(By.Id("Capacidade"));
+        input.Clear(); // limpa o campo antes
+        input.SendKeys(capacidade.ToString());
 
         return this;
     }
