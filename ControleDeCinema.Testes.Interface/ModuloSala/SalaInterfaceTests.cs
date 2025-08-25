@@ -16,11 +16,12 @@ public sealed class SalaInterfaceTests : TestFixture
         // Act
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("001")
+            .PreencherNumero(001)
+            .PreencherCapacidade(200)
             .Confirmar();
 
         // Assert
-        Assert.IsTrue(indexPageObject.ContemSala("001"));
+        Assert.IsTrue(indexPageObject.ContemSala(001));
     }
 
     [TestMethod]
@@ -32,17 +33,19 @@ public sealed class SalaInterfaceTests : TestFixture
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("001")
+            .PreencherNumero(001)
+            .PreencherCapacidade(200)
             .Confirmar();
 
         // Act
         indexPageObject
             .ClickEditar()
-            .PreencherNome("002")
+            .PreencherNumero(002)
+            .PreencherCapacidade(150)
             .Confirmar();
 
         // Assert
-        Assert.IsTrue(indexPageObject.ContemSala("002"));
+        Assert.IsTrue(indexPageObject.ContemSala(002));
     }
 
     [TestMethod]
@@ -54,7 +57,8 @@ public sealed class SalaInterfaceTests : TestFixture
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("001")
+            .PreencherNumero(001)
+            .PreencherCapacidade(200)
             .Confirmar();
 
         // Act
@@ -63,6 +67,6 @@ public sealed class SalaInterfaceTests : TestFixture
             .Confirmar();
 
         // Assert
-        Assert.IsFalse(indexPageObject.ContemSala("001"));
+        Assert.IsFalse(indexPageObject.ContemSala(001));
     }
 }

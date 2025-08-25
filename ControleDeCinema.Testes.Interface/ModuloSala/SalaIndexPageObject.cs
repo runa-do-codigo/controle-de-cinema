@@ -42,10 +42,10 @@ public class SalaIndexPageObject
         return new SalaFormPageObject(driver!);
     }
 
-    public bool ContemSala(string nome)
+    public bool ContemSala(int numero)
     {
         wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
 
-        return driver.PageSource.Contains(nome);
+        return driver.PageSource.Contains(numero.ToString());
     }
 }
