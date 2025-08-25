@@ -1,7 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ControleDeCinema.Dominio.ModuloFilme;
+using ControleDeCinema.Dominio.ModuloGeneroFilme;
+using ControleDeCinema.Dominio.ModuloSala;
+using ControleDeCinema.Dominio.ModuloSessao;
 using ControleDeCinema.Infraestrutura.Orm.Compartilhado;
 using ControleDeCinema.Infraestrutura.Orm.ModuloSessao;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace ControleDeCinema.Testes.Integracao.ModuloSessao;
 
@@ -12,20 +16,87 @@ public sealed class RepositorioSessaoEmOrmTests
 {
     private ControleDeCinemaDbContext dbContext;
     private RepositorioSessaoEmOrm repositorioSessao;
-    
+
     [TestMethod]
     public void Deve_Cadastrar_Sessao_Corretamente()
     {
-        var configuracao = new ConfigurationBuilder().Build();
 
-        var connectionString = configuracao["SQL_CONNECTION_STRING"];
+        // Arrange
+        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
 
-        var options = new DbContextOptionsBuilder<ControleDeCinemaDbContext>()
-            .UseNpgsql(connectionString)
-            .Options;
+        // Act
+        repositorioSessao?.Cadastrar(sessao);
+        dbContext?.SaveChanges();
 
-        dbContext = new ControleDeCinemaDbContext(options);
+        // Assert
+        var registroSelecionado = repositorioSessao?.SelecionarRegistroPorId(sessao.Id);
 
-        repositorioSessao = new RepositorioSessaoEmOrm(dbContext);
+        Assert.AreEqual(sessao, registroSelecionado);
     }
+    [TestMethod]
+    public void Deve_Editar_Sessao_Corretamente()
+    {
+
+        // Arrange
+        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        repositorioSessao?.Cadastrar(sessao);
+        dbContext?.SaveChanges();
+
+        var sessaoEditada = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano 2", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+
+        // Act
+        var conseguiuEditar = repositorioSessao?.Editar(sessao.Id, sessaoEditada);
+        dbContext?.SaveChanges();
+
+        // Assert
+        var registroSelecionado = repositorioSessao?.SelecionarRegistroPorId(sessao.Id);
+
+        Assert.IsTrue(conseguiuEditar);
+        Assert.AreEqual(sessao, registroSelecionado);
+    }
+
+    [TestMethod]
+    public void Deve_Excluir_Filme_Corretamente()
+    {
+        // Arrange
+        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        repositorioSessao?.Cadastrar(sessao);
+        dbContext?.SaveChanges();
+
+        // Act
+        var conseguiuExcluir = repositorioSessao?.Excluir(sessao.Id);
+        dbContext?.SaveChanges();
+
+        // Assert
+        var registroSelecionado = repositorioSessao?.SelecionarRegistroPorId(sessao.Id);
+
+        Assert.IsTrue(conseguiuExcluir);
+        Assert.IsNull(registroSelecionado);
+    }
+
+    [TestMethod]
+    public void Deve_Selecionar_Filmes_Corretamente()
+    {
+
+        // Arrange - Arranjo
+        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao2 = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano 2", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao3 = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano 3", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+
+        List<Sessao> sessaoEsperados = [sessao, sessao2, sessao3];
+
+        repositorioSessao?.CadastrarEntidades(sessaoEsperados);
+        dbContext?.SaveChanges();
+
+        var filmesEsperadasOrdenadas = sessaoEsperados
+            .OrderBy(d => d.Inicio)
+            .ToList();
+
+        // Act - Ação
+        var filmesRecebidas = repositorioSessao?.SelecionarRegistros();
+
+        // Assert - Asseção
+        CollectionAssert.AreEqual(filmesEsperadasOrdenadas, filmesRecebidas);
+    }
+
 }
