@@ -13,7 +13,7 @@ public class Ingresso : EntidadeBase<Ingresso>
     [ExcludeFromCodeCoverage]
     protected Ingresso() { }
 
-    public Ingresso(int numeroAssento, bool meiaEntrada, Sessao sessao)
+    public Ingresso(int numeroAssento, bool meiaEntrada, Sessao sessao) : this()
     {
         Id = Guid.NewGuid();
         NumeroAssento = numeroAssento;
