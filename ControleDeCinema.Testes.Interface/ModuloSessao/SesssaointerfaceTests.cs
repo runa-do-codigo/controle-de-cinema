@@ -1,4 +1,8 @@
-﻿using ControleDeCinema.Testes.Interface.ModuloSessao;
+﻿using ControleDeCinema.Dominio.ModuloFilme;
+using ControleDeCinema.Dominio.ModuloGeneroFilme;
+using ControleDeCinema.Dominio.ModuloSala;
+using ControleDeCinema.Dominio.ModuloSessao;
+using ControleDeCinema.Testes.Interface.ModuloSessao;
 using TesteFacil.Testes.Interface.Compartilhado;
 
 namespace ControleDeCinema.Testes.Interface.ModuloSessao;
@@ -17,12 +21,15 @@ public sealed class SessaoInterfaceTests : TestFixture
         // Act
         indexPageObject
             .ClickCadastrar()
-            .PreencherNumero(001)
-            .PreencherCapacidade(200)
+            .PreencherNumeroIngressos(200)
+            .PreencherEncerrada(true)
+            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
+            .SelecionarSala(new Sala(1, 100))
+            .PreencherDataHora(new DateTime(2025, 08, 20, 14, 30, 00))
             .Confirmar();
 
         // Assert
-        Assert.IsTrue(indexPageObject.ContemSessao(001));
+        Assert.IsTrue(indexPageObject.ContemSessao(new Guid()));
     }
 
     [TestMethod]
@@ -34,19 +41,25 @@ public sealed class SessaoInterfaceTests : TestFixture
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNumero(001)
-            .PreencherCapacidade(200)
+            .PreencherNumeroIngressos(200)
+            .PreencherEncerrada(true)
+            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
+            .SelecionarSala(new Sala(1, 100))
+            .PreencherDataHora(new DateTime(2025, 08, 20, 14, 30, 00))
             .Confirmar();
 
         // Act
         indexPageObject
             .ClickEditar()
-            .PreencherNumero(002)
-            .PreencherCapacidade(150)
+            .PreencherNumeroIngressos(200)
+            .PreencherEncerrada(true)
+            .SelecionarFilme(new Filme("O Mano 2", 109, true, new GeneroFilme("Terror")))
+            .SelecionarSala(new Sala(2, 150))
+            .PreencherDataHora(new DateTime(2025, 08, 22, 14, 30, 00))
             .Confirmar();
 
         // Assert
-        Assert.IsTrue(indexPageObject.ContemSessao(002));
+        Assert.IsTrue(indexPageObject.ContemSessao(new Guid()));
     }
 
     [TestMethod]
@@ -58,8 +71,11 @@ public sealed class SessaoInterfaceTests : TestFixture
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNumero(001)
-            .PreencherCapacidade(200)
+            .PreencherNumeroIngressos(200)
+            .PreencherEncerrada(true)
+            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
+            .SelecionarSala(new Sala(1, 100))
+            .PreencherDataHora(new DateTime(2025, 08, 20, 14, 30, 00))
             .Confirmar();
 
         // Act
@@ -68,6 +84,6 @@ public sealed class SessaoInterfaceTests : TestFixture
             .Confirmar();
 
         // Assert
-        Assert.IsFalse(indexPageObject.ContemSala(001));
+        Assert.IsFalse(indexPageObject.ContemSessao(new Guid()));
     }
 }

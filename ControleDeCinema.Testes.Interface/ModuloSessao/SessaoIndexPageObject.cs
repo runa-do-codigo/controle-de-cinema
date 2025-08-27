@@ -43,10 +43,10 @@ public class SessaoIndexPageObject
         return new SessaoFormPageObject(driver!);
     }
 
-    public bool ContemSessao(int numero)
+    public bool ContemSessao(Guid id)
     {
         wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
 
-        return driver.PageSource.Contains(numero.ToString());
+        return driver.PageSource.Contains(id.ToString());
     }
 }
