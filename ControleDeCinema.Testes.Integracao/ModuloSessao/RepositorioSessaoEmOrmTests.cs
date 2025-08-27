@@ -56,7 +56,7 @@ public sealed class RepositorioSessaoEmOrmTests
     }
 
     [TestMethod]
-    public void Deve_Excluir_Filme_Corretamente()
+    public void Deve_Excluir_Sessao_Corretamente()
     {
         // Arrange
         var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
@@ -75,7 +75,7 @@ public sealed class RepositorioSessaoEmOrmTests
     }
 
     [TestMethod]
-    public void Deve_Selecionar_Filmes_Corretamente()
+    public void Deve_Selecionar_Sessoes_Corretamente()
     {
 
         // Arrange - Arranjo
