@@ -1,5 +1,5 @@
 ﻿using ControleDeCinema.Dominio.ModuloGeneroFilme;
-using TesteFacil.Testes.Integracao.Compartilhado;
+using ControleDeCinema.Testes.Integracao.Compartilhado;
 
 namespace ControleDeCinema.Testes.Integracao.ModuloGeneroFilme;
 

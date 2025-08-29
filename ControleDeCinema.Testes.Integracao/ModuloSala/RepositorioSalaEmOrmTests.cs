@@ -1,6 +1,6 @@
 ﻿using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using ControleDeCinema.Dominio.ModuloSala;
-using TesteFacil.Testes.Integracao.Compartilhado;
+using ControleDeCinema.Testes.Integracao.Compartilhado;
 
 namespace ControleDeCinema.Testes.Integracao.ModuloSala;
 

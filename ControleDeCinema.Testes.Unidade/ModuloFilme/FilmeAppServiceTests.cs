@@ -25,7 +25,7 @@ public sealed class FilmeAppServiceTests
     public void Setup()
     {
         tenantProviderMock = new Mock<ITenantProvider>();
-        repositorioGeneroFilmeMock = new Mock<IRepositorioGeneroFilme>();
+        repositorioFilmeMock = new Mock<IRepositorioFilme>();
         unitOfWorkMock = new Mock<IUnitOfWork>();
         loggerMock = new Mock<ILogger<FilmeAppService>>();
         filmeAppService = new FilmeAppService(
@@ -55,7 +55,6 @@ public sealed class FilmeAppServiceTests
 
         unitOfWorkMock?.Verify(u => u.Commit(), Times.Once);
 
-        Assert.IsNotNull(resultado);
         Assert.IsTrue(resultado.IsSuccess);
     }
 
@@ -79,7 +78,6 @@ public sealed class FilmeAppServiceTests
 
         unitOfWorkMock?.Verify(u => u.Commit(), Times.Never);
 
-        Assert.IsNotNull(resultado);
         Assert.IsTrue(resultado.IsFailed);
     }
 
@@ -108,7 +106,6 @@ public sealed class FilmeAppServiceTests
         var mensagemErro = resultado.Errors.First().Message;
 
         Assert.AreEqual("Ocorreu um erro interno do servidor", mensagemErro);
-
         Assert.IsTrue(resultado.IsFailed);
     }
 }

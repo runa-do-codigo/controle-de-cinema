@@ -10,7 +10,7 @@ using ControleDeCinema.Infraestrutura.Orm.ModuloSessao;
 using DotNet.Testcontainers.Containers;
 using FizzWare.NBuilder;
 using Testcontainers.PostgreSql;
-namespace TesteFacil.Testes.Integracao.Compartilhado;
+namespace ControleDeCinema.Testes.Integracao.Compartilhado;
 
 [TestClass]
 public abstract class TestFixture

@@ -3,7 +3,7 @@ using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using ControleDeCinema.Dominio.ModuloSala;
 using ControleDeCinema.Dominio.ModuloSessao;
 using ControleDeCinema.Testes.Interface.ModuloSessao;
-using TesteFacil.Testes.Interface.Compartilhado;
+using ControleDeCinema.Testes.Interface.Compartilhado;
 
 namespace ControleDeCinema.Testes.Interface.ModuloSessao;
 

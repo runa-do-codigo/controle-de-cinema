@@ -7,7 +7,7 @@ using OpenQA.Selenium.Remote;
 using Testcontainers.PostgreSql;
 using ControleDeCinema.Infraestrutura.Orm.Compartilhado;
 
-namespace TesteFacil.Testes.Interface.Compartilhado;
+namespace ControleDeCinema.Testes.Interface.Compartilhado;
 
 [TestClass]
 public abstract class TestFixture
