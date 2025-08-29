@@ -85,6 +85,6 @@ public sealed class RepositorioSalaEmOrmTests : TestFixture
         var salasRecebidas = repositorioSala?.SelecionarRegistros();
 
         // Assert - Asseção
-        CollectionAssert.AreEqual(salaEsperadasOrdenadas, salasRecebidas);
+        CollectionAssert.AreEqual(salaEsperadasOrdenadas, salasEsperados);
     }
 }

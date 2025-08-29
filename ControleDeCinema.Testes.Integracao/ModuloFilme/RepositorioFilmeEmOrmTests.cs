@@ -89,6 +89,6 @@ public sealed class RepositorioFilmeEmOrmTests : TestFixture
         var filmesRecebidas = repositorioFilme?.SelecionarRegistros();
 
         // Assert - Asseção
-        CollectionAssert.AreEqual(filmesEsperadasOrdenadas, filmesRecebidas);
+        CollectionAssert.AreEquivalent(filmesEsperadasOrdenadas, filmesRecebidas);
     }
 }

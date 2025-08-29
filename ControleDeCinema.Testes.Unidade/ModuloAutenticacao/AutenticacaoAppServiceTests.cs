@@ -32,6 +32,4 @@ public sealed class AutenticacaoAppServiceTests
             signInManager.Object,
             roleManager.Object);
     }
-
-
 }
