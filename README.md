@@ -1,6 +1,8 @@
 # Controle de Cinema
 
-![Cinema]()
+## _________________ Cliente __________________________________ Empresa ___________________
+![Cliente](https://i.imgur.com/m5Ge8sr.gif)
+![Empresa](https://i.imgur.com/K48XU9w.gif)
 
 ## Introdução
 
