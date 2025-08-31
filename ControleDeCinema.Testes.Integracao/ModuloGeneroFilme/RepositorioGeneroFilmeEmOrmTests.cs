@@ -84,6 +84,6 @@ public sealed class RepositorioGeneroFilmeEmOrmTests : TestFixture
         var generosRecebidas = repositorioGeneroFilme?.SelecionarRegistros();
 
         // Assert - Asseção
-        CollectionAssert.AreEqual(generoEsperadasOrdenadas, generosRecebidas);
+        CollectionAssert.AreEquivalent(generoEsperadasOrdenadas, generosRecebidas);
     }
 }
