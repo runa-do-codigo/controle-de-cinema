@@ -17,7 +17,22 @@ A solução permite que cinemas organizem sua programação, gerenciem salas e s
 
 ## Tecnologias
 
-<p align="left"> <img src="https://skillicons.dev/icons?i=cs" height="50"/> <img src="https://skillicons.dev/icons?i=dotnet" height="50"/> <img src="https://skillicons.dev/icons?i=visualstudio" height="50"/> <img src="https://skillicons.dev/icons?i=html" height="50"/> <img src="https://skillicons.dev/icons?i=css" height="50"/> <img src="https://skillicons.dev/icons?i=js" height="50"/> <img src="https://skillicons.dev/icons?i=bootstrap" height="50"/> <img src="https://skillicons.dev/icons?i=git" height="50"/> <img src="https://skillicons.dev/icons?i=github" height="50"/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="45"/> <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/render.svg" height="40"/> <img src="https://skillicons.dev/icons?i=azure" height="50"/> <img src="https://skillicons.dev/icons?i=docker" height="50"/> </p>
+<p align="left"> 
+  <img src="https://skillicons.dev/icons?i=cs" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=dotnet" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=visualstudio" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=html" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=css" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=js" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=bootstrap" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=git" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=github" height="50"/> 
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="45"/> 
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/render.svg" height="40"/> 
+  <img src="https://skillicons.dev/icons?i=azure" height="50"/> 
+  <img src="https://skillicons.dev/icons?i=docker" height="50"/> 
+  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/newrelic.svg" height="40"/> 
+</p>
 
 ---
 
