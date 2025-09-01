@@ -48,6 +48,7 @@ public sealed class AutenticacaoInterfaceTests : TestFixture
         // Assert
         Assert.IsTrue(autenticacaoIndex.EstaLogado());
     }
+
     [TestMethod]
     public void Deve_Realizar_Login_Corretamente()
     {

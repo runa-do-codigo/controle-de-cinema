@@ -16,13 +16,13 @@
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Inicio" class="control-label fs-5">Início:</label>
-                        <input asp-for="Inicio" class="form-control"/>
+                        <input asp-for="Inicio" class="form-control" data-se="InputInicio" />
                         <span asp-validation-for="Inicio" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="NumeroMaximoIngressos" class="control-label fs-5">Número Máx. de Ingressos:</label>
-                        <input asp-for="NumeroMaximoIngressos" class="form-control" type="number" min="0" />
+                        <input asp-for="NumeroMaximoIngressos" class="form-control" type="number" min="0" data-se="InputNumeroMaximoIngressos" />
                         <span asp-validation-for="NumeroMaximoIngressos" class="text-danger"></span>
                     </div>
 
@@ -40,7 +40,7 @@
 
                     <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
                         <a asp-action="Index">Voltar para a listagem</a>
-                        <button type="submit" class="btn btn-primary rounded-3 px-5">Confirmar</button>
+                        <button type="submit" class="btn btn-primary rounded-3 px-5" data-se="btnConfirmar">Confirmar</button>
                     </div>
                 </form>
             </div>

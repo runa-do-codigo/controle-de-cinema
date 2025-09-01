@@ -6,6 +6,13 @@ namespace ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
 [TestCategory("Tests de Interface de Genero de Filme")]
 public sealed class GeneroFilmeInterfaceTests : TestFixture
 {
+    [TestInitialize]
+    public override void InicializarTeste()
+    {
+        base.InicializarTeste();
+        RegistrarContaEmpresarial();
+    }
+
     [TestMethod]
     public void Deve_Cadastrar_Genero_Filme_Corretamente()
     {

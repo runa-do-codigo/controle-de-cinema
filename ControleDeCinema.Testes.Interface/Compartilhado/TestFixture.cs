@@ -6,6 +6,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using Testcontainers.PostgreSql;
 using ControleDeCinema.Infraestrutura.Orm.Compartilhado;
+using OpenQA.Selenium.Support.UI;
 
 namespace ControleDeCinema.Testes.Interface.Compartilhado;
 
@@ -60,7 +61,7 @@ public abstract class TestFixture
     }
 
     [TestInitialize]
-    public void InicializarTeste()
+    public virtual void InicializarTeste()
     {
         if (dbContainer is null)
             throw new ArgumentNullException("O banco de dados não foi inicializado.");
@@ -74,11 +75,11 @@ public abstract class TestFixture
     {
         dbContext.Database.EnsureCreated();
 
+        dbContext.Ingressos.RemoveRange(dbContext.Ingressos);
+        dbContext.Sessoes.RemoveRange(dbContext.Sessoes);
         dbContext.Salas.RemoveRange(dbContext.Salas);
         dbContext.Filmes.RemoveRange(dbContext.Filmes);
         dbContext.GenerosFilme.RemoveRange(dbContext.GenerosFilme);
-        dbContext.Sessoes.RemoveRange(dbContext.Sessoes);
-        dbContext.Ingressos.RemoveRange(dbContext.Ingressos);
 
         dbContext.SaveChanges();
     }
@@ -90,7 +91,7 @@ public abstract class TestFixture
           .WithPortBinding(dbPort, true)
           .WithNetwork(rede)
           .WithNetworkAliases("controle-cinema-e2e-testdb")
-          .WithName("controle-cinema-e2e-testdb2")
+          .WithName("controle-cinema-e2e-testdb")
           .WithDatabase("ControleDeCinemaTestDb")
           .WithUsername("postgres")
           .WithPassword("YourStrongPassword")
@@ -110,7 +111,7 @@ public abstract class TestFixture
             .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), string.Empty)
             .WithDockerfile("Dockerfile")
             .WithBuildArgument("RESOURCE_REAPER_SESSION_ID", ResourceReaper.DefaultSessionId.ToString("D"))
-            .WithName("controle-cinema-e2e-testdb")
+            .WithName("controle-cinema-e2e-testdb:latest")
             .Build();
 
         await imagem.CreateAsync().ConfigureAwait(false);
@@ -126,7 +127,7 @@ public abstract class TestFixture
             .WithPortBinding(appPort, true)
             .WithNetwork(rede)
             .WithNetworkAliases("controle-cinema-webapp")
-            .WithName("controle-cinema-webapp2")
+            .WithName("controle-cinema-webapp")
             .WithEnvironment("SQL_CONNECTION_STRING", connectionStringRede)
             .WithEnvironment("NEWRELIC_LICENSE_KEY", configuracao?["NEWRELIC_LICENSE_KEY"])
             .WithWaitStrategy(Wait.ForUnixContainer()
@@ -184,5 +185,43 @@ public abstract class TestFixture
 
         if (seleniumContainer is not null)
             await seleniumContainer.DisposeAsync();
+    }
+
+    protected static void RegistrarContaEmpresarial()
+    {
+        driver?.Navigate().GoToUrl($"{enderecoBase}/autenticacao/registro");
+
+        IWebElement inputEmail = driver.FindElement(By.Id("Email"));
+        IWebElement inputSenha = driver.FindElement(By.Id("Senha"));
+        IWebElement inputConfirmarSenha = driver.FindElement(By.Id("ConfirmarSenha"));
+        SelectElement selectTipoUsuario = new(driver.FindElement(By.Id("Tipo")));
+
+        inputEmail.Clear();
+        inputEmail.SendKeys("tioguda@gmail.com");
+
+        inputSenha.Clear();
+        inputSenha.SendKeys("abcBolinhas12345");
+
+        inputConfirmarSenha.Clear();
+        inputConfirmarSenha.SendKeys("abcBolinhas12345");
+
+        selectTipoUsuario.SelectByText("Empresa");
+
+        WebDriverWait wait = new(driver, TimeSpan.FromSeconds(20));
+
+        wait.Until(d =>
+        {
+            IWebElement btn = d.FindElement(By.CssSelector("button[data-se='btnConfirmar']"));
+            if (!btn.Enabled || !btn.Displayed) return false;
+            btn.Click();
+            return true;
+        });
+
+        wait.Until(d =>
+            !d.Url.Contains("/autenticacao/registro", StringComparison.OrdinalIgnoreCase) &&
+            d.FindElements(By.CssSelector("form[action='/autenticacao/registro']")).Count == 0
+        );
+
+        wait.Until(d => d.FindElements(By.CssSelector("form[action='/autenticacao/logout']")).Count > 0);
     }
 }
