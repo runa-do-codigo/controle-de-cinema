@@ -45,14 +45,14 @@ public sealed class SessaoAppServiceTests
         var genero = new GeneroFilme("Ação");
         var filme = new Filme("O mano", 160, false, genero);
         var sala = new Sala(1, 90);
-        var sessao = new Sessao(DateTime.Parse("1/11/2025 20:00:00"), 100, filme, sala);
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 100, filme, sala);
 
         repositorioSessaoMock?
             .Setup(r => r.SelecionarRegistros())
             .Returns(new List<Sessao>() { });
 
         // Act
-        var resultado = sessaoAppService!.Cadastrar(sessao);
+        var resultado = sessaoAppService.Cadastrar(sessao);
 
         // Assert
         repositorioSessaoMock?.Verify(r => r.Cadastrar(sessao), Times.Never);
@@ -69,10 +69,10 @@ public sealed class SessaoAppServiceTests
         var genero = new GeneroFilme("Terror");
         var filme = new Filme("O mano", 100, false, genero);
         var sala = new Sala(1, 100);
-        var sessao = new Sessao(DateTime.Parse("1/11/2025 20:00:00"), 100, filme, sala);
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 100, filme, sala);
 
         var filme2 = new Filme("Leon the Professional", 160, false, genero);
-        var sessao2 = new Sessao(DateTime.Parse("1/11/2025 20:00:00"), 100, filme2, sala);
+        var sessao2 = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 100, filme2, sala);
 
         repositorioSessaoMock?
             .Setup(r => r.SelecionarRegistros())
@@ -97,9 +97,9 @@ public sealed class SessaoAppServiceTests
         var genero = new GeneroFilme("Ação");
         var filme = new Filme("O mano", 100, false, genero);
         var sala = new Sala(1, 100);
-        var sessao = new Sessao(DateTime.Parse("27/09/2025 16:00:00"), 100, filme, sala);
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 100, filme, sala);
 
-        var sessaoEditada = new Sessao(DateTime.Parse("27/09/2025 17:00:00"), 110, filme, sala);
+        var sessaoEditada = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 110, filme, sala);
 
         repositorioSessaoMock?
          .Setup(r => r.SelecionarRegistros())
@@ -127,12 +127,12 @@ public sealed class SessaoAppServiceTests
         var genero = new GeneroFilme("Ação");
         var filme = new Filme("O mano", 100, false, genero);
         var sala = new Sala(1, 100);
-        var sessao = new Sessao(DateTime.Parse("27/09/2025 20:00:00"), 100, filme, sala);
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 100, filme, sala);
 
         var filme2 = new Filme("Leon the Professional", 160, false, genero);
-        var sessao2 = new Sessao(DateTime.Parse("27/09/2025 21:00:00"), 100, filme2, sala);
+        var sessao2 = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 100, filme2, sala);
 
-        var sessaoEditada = new Sessao(DateTime.Parse("27/09/2025 20:00:00"), 100, filme2, sala);
+        var sessaoEditada = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 100, filme2, sala);
 
         repositorioSessaoMock?
             .Setup(r => r.SelecionarRegistros())

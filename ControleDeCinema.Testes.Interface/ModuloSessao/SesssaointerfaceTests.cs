@@ -25,7 +25,7 @@ public sealed class SessaoInterfaceTests : TestFixture
             .PreencherEncerrada(true)
             .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
             .SelecionarSala(new Sala(1, 100))
-            .PreencherDataHora(new DateTime(2025, 08, 20, 14, 30, 00))
+            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
             .Confirmar();
 
         // Assert
@@ -45,7 +45,7 @@ public sealed class SessaoInterfaceTests : TestFixture
             .PreencherEncerrada(true)
             .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
             .SelecionarSala(new Sala(1, 100))
-            .PreencherDataHora(new DateTime(2025, 08, 20, 14, 30, 00))
+            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
             .Confirmar();
 
         // Act
@@ -55,7 +55,7 @@ public sealed class SessaoInterfaceTests : TestFixture
             .PreencherEncerrada(true)
             .SelecionarFilme(new Filme("O Mano 2", 109, true, new GeneroFilme("Terror")))
             .SelecionarSala(new Sala(2, 150))
-            .PreencherDataHora(new DateTime(2025, 08, 22, 14, 30, 00))
+            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
             .Confirmar();
 
         // Assert
@@ -75,7 +75,7 @@ public sealed class SessaoInterfaceTests : TestFixture
             .PreencherEncerrada(true)
             .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
             .SelecionarSala(new Sala(1, 100))
-            .PreencherDataHora(new DateTime(2025, 08, 20, 14, 30, 00))
+            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
             .Confirmar();
 
         // Act
