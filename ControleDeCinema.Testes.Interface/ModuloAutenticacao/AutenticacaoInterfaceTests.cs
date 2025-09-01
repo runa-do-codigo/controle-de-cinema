@@ -1,4 +1,4 @@
-﻿using ControleDeCinema.Testes.Interface.Compartilhado;
+using ControleDeCinema.Testes.Interface.Compartilhado;
 using ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
 
 namespace ControleDeCinema.Testes.Interface.ModuloAutenticacao;
@@ -19,13 +19,12 @@ public sealed class AutenticacaoInterfaceTests : TestFixture
         autenticacaoIndex
             .ClickCadastrar()
             .PreencherEmail("iagustavo@gmail.com")
-            .PreencherSenha("gustaviago12345")
-            .PreencherConfirmarSenha("gustaviago12345")
+            .PreencherSenha("gustavIado12345!")
+            .PreencherConfirmarSenha("gustavIado12345!")
             .SelecionarTipoDeUsuario("Empresa")
             .Confirmar();
 
         // Assert
-
         Assert.IsTrue(autenticacaoIndex.EstaLogado());
     }
 
@@ -40,8 +39,8 @@ public sealed class AutenticacaoInterfaceTests : TestFixture
         autenticacaoIndex
             .ClickCadastrar()
             .PreencherEmail("iagustavo@hotmail.com")
-            .PreencherSenha("senhaforte")
-            .PreencherConfirmarSenha("senhaforte")
+            .PreencherSenha("SenhaForce123!")
+            .PreencherConfirmarSenha("SenhaForce123!")
             .SelecionarTipoDeUsuario("Cliente")
             .Confirmar();
 
@@ -57,9 +56,9 @@ public sealed class AutenticacaoInterfaceTests : TestFixture
         autenticacaoIndex
             .IrParaRegistro(enderecoBase)
             .PreencherEmail("iagustavo@gmail.com")
-            .PreencherSenha("senhaforte")
-            .PreencherConfirmarSenha("senhaPadrao")
-            .SelecionarTipoDeUsuario("Empresa")
+            .PreencherSenha("SenhaForce123!")
+            .PreencherConfirmarSenha("SenhaForce123!")
+            .SelecionarTipoDeUsuario("Cliente")
             .Confirmar();
 
         autenticacaoIndex
@@ -70,8 +69,8 @@ public sealed class AutenticacaoInterfaceTests : TestFixture
              .IrParaLogin(enderecoBase);
 
         autenticacaoForm
-            .PreencherEmail("senhaforte")
-            .PreencherSenha("senhaforte")
+            .PreencherEmail("iagustavo@gmail.com")
+            .PreencherSenha("SenhaForce123!")
             .Confirmar();
 
         // Assert

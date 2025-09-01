@@ -1,4 +1,4 @@
-﻿using ControleDeCinema.Testes.Interface.ModuloAutenticacao;
+using ControleDeCinema.Testes.Interface.ModuloAutenticacao;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -15,28 +15,21 @@ public class AutenticacaoFormPageObject
 
         wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
-        wait.Until(d => d.FindElement(By.CssSelector("form")).Displayed);
+        wait.Until(d =>
+            d.FindElement(By.CssSelector("input[data-se='InputEmail']")).Displayed &&
+            d.FindElement(By.CssSelector("input[data-se='InputSenha']")).Displayed);
     }
 
     public AutenticacaoFormPageObject PreencherEmail(string email)
     {
-        var inputNome = driver?.FindElement(By.Id("email"));
-        inputNome?.Clear();
-        inputNome?.SendKeys(email);
-
-        return this;
-    }
-
-    public AutenticacaoFormPageObject PreencherSenha(int senha)
-    {
         wait.Until(d =>
-             d.FindElement(By.CssSelector("input[data-se='inputEmail']")).Displayed &&
-            d.FindElement(By.CssSelector("input[data-se='inputEmail']")).Enabled
+             d.FindElement(By.CssSelector("input[data-se='InputEmail']")).Displayed &&
+            d.FindElement(By.CssSelector("input[data-se='InputEmail']")).Enabled
         );
 
-        IWebElement inputEmail = wait.Until(d => d.FindElement(By.CssSelector("input[data-se='inputEmail']")));
+        IWebElement inputEmail = wait.Until(d => d.FindElement(By.CssSelector("input[data-se='InputEmail']")));
         inputEmail.Clear();
-        inputEmail.SendKeys(senha.ToString());
+        inputEmail.SendKeys(email);
 
         return this;
     }
@@ -44,11 +37,11 @@ public class AutenticacaoFormPageObject
     public AutenticacaoFormPageObject PreencherSenha(string senha)
     {
         wait.Until(d =>
-            d.FindElement(By.CssSelector("input[data-se='inputSenha']")).Displayed &&
-            d.FindElement(By.CssSelector("input[data-se='inputSenha']")).Enabled
+            d.FindElement(By.CssSelector("input[data-se='InputSenha']")).Displayed &&
+            d.FindElement(By.CssSelector("input[data-se='InputSenha']")).Enabled
         );
 
-        IWebElement inputSenha = wait.Until(d => d.FindElement(By.CssSelector("input[data-se='inputSenha']")));
+        IWebElement inputSenha = wait.Until(d => d.FindElement(By.CssSelector("input[data-se='InputSenha']")));
         inputSenha.Clear();
         inputSenha.SendKeys(senha);
 
@@ -58,11 +51,11 @@ public class AutenticacaoFormPageObject
     public AutenticacaoFormPageObject PreencherConfirmarSenha(string confirmarSenha)
     {
         wait.Until(d =>
-            d.FindElement(By.CssSelector("input[data-se='inputConfirmarSenha']")).Displayed &&
-            d.FindElement(By.CssSelector("input[data-se='inputConfirmarSenha']")).Enabled
+            d.FindElement(By.CssSelector("input[data-se='InputConfirmarSenha']")).Displayed &&
+            d.FindElement(By.CssSelector("input[data-se='InputConfirmarSenha']")).Enabled
         );
 
-        IWebElement inputConfirmarSenha = wait.Until(d => d.FindElement(By.CssSelector("input[data-se='inputConfirmarSenha']")));
+        IWebElement inputConfirmarSenha = wait.Until(d => d.FindElement(By.CssSelector("input[data-se='InputConfirmarSenha']")));
         inputConfirmarSenha.Clear();
         inputConfirmarSenha.SendKeys(confirmarSenha);
 
@@ -71,11 +64,11 @@ public class AutenticacaoFormPageObject
     public AutenticacaoFormPageObject SelecionarTipoDeUsuario(string tipoConta)
     {
         wait.Until(d =>
-            d.FindElement(By.CssSelector("select[data-se='selectTipoUsuario']")).Displayed &&
-            d.FindElement(By.CssSelector("select[data-se='selectTipoUsuario']")).Enabled
+            d.FindElement(By.CssSelector("select[data-se='InputTipo']")).Displayed &&
+            d.FindElement(By.CssSelector("select[data-se='InputTipo']")).Enabled
         );
 
-        SelectElement selectTipoUsuario = new(driver.FindElement(By.CssSelector("select[data-se='selectTipoUsuario']")));
+        SelectElement selectTipoUsuario = new(driver.FindElement(By.CssSelector("select[data-se='InputTipo']")));
 
         wait.Until(_ => selectTipoUsuario.Options.Any(o => o.Text == tipoConta));
 
@@ -86,9 +79,9 @@ public class AutenticacaoFormPageObject
 
     public AutenticacaoIndexPageObject Confirmar()
     {
-        wait.Until(d => d.FindElement(By.CssSelector("button[type='submit']"))).Click();
+        wait.Until(d => d.FindElement(By.CssSelector("button[data-se='btnConfirmar']"))).Click();
 
-        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
+        wait.Until(d => d.FindElements(By.CssSelector("form[action='/autenticacao/logout']")).Count > 0);
 
         return new AutenticacaoIndexPageObject(driver!);
     }

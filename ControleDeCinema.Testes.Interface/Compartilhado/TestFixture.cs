@@ -168,6 +168,10 @@ public abstract class TestFixture
 
         var options = new ChromeOptions();
 
+        options.AddArgument("--window-size=1920,2000");
+        options.AddArgument("--disable-dev-shm-usage");
+        options.AddArgument("--no-sandbox");
+
         driver = new RemoteWebDriver(enderecoSelenium, options);
     }
 

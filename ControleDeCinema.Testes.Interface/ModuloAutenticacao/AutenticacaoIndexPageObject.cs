@@ -1,4 +1,4 @@
-﻿using ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
+using ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -18,13 +18,14 @@ public class AutenticacaoIndexPageObject
 
     public AutenticacaoIndexPageObject IrPara(string enderecoBase)
     {
-        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "sutenticacao"));
+        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "autenticacao/login"));
 
         return this;
     }
+
     public AutenticacaoFormPageObject ClickCadastrar()
     {
-        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']"))).Click();
+        wait.Until(d => d.FindElement(By.CssSelector("a[href='/autenticacao/registro']"))).Click();
 
         return new AutenticacaoFormPageObject(driver!);
     }
@@ -54,7 +55,7 @@ public class AutenticacaoIndexPageObject
         driver.Navigate().GoToUrl($"{enderecoBase.TrimEnd('/')}/autenticacao/registro");
 
         wait.Until(d => d.Url.Contains("/autenticacao/registro", StringComparison.OrdinalIgnoreCase));
-        wait.Until(d => d.FindElement(By.CssSelector("input[data-se='inputEmail']")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("input[data-se='InputEmail']")).Displayed);
 
         return new(driver);
     }
@@ -75,7 +76,7 @@ public class AutenticacaoIndexPageObject
         driver.Navigate().GoToUrl($"{enderecoBase.TrimEnd('/')}/autenticacao/login");
 
         wait.Until(d => d.Url.Contains("/autenticacao/login", StringComparison.OrdinalIgnoreCase));
-        wait.Until(d => d.FindElement(By.CssSelector("input[data-se='inputEmail']")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("input[data-se='InputEmail']")).Displayed);
 
         return new(driver);
     }

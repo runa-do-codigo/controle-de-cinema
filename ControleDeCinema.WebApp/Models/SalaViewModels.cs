@@ -45,7 +45,7 @@ public class ExcluirSalaViewModel
 
     public ExcluirSalaViewModel() { }
 
-    public ExcluirSalaViewModel(Guid id, int numero)
+    public ExcluirSalaViewModel(Guid id, int numero) : this()
     {
         Id = id;
         Numero = numero;

@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
@@ -14,14 +14,14 @@ public class FilmeFormPageObject
 
         wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
-        wait.Until(d => d.FindElement(By.CssSelector("form")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("form[data-se='form']")).Displayed);
     }
 
-    public FilmeFormPageObject PreencherNome(string nome)
+    public FilmeFormPageObject PreencherTitulo(string titulo)
     {
-        var inputNome = driver?.FindElement(By.Id("Nome"));
-        inputNome?.Clear();
-        inputNome?.SendKeys(nome);
+        var InputTitulo = driver?.FindElement(By.CssSelector("input[data-se='InputTitulo']"));
+        InputTitulo?.Clear();
+        InputTitulo?.SendKeys(titulo);
 
         return this;
     }
@@ -29,11 +29,11 @@ public class FilmeFormPageObject
     public FilmeFormPageObject PreencherDuracao(int duracao)
     {
         wait.Until(d =>
-            d.FindElement(By.Id("Duracao")).Displayed &&
-            d.FindElement(By.Id("Duracao")).Enabled
+            d.FindElement(By.CssSelector("input[data-se='InputDuracao']")).Displayed &&
+            d.FindElement(By.CssSelector("input[data-se='InputDuracao']")).Enabled
         );
 
-        var input = driver.FindElement(By.Id("Duracao"));
+        var input = driver.FindElement(By.CssSelector("input[data-se='InputDuracao']"));
         input.Clear(); // limpa o campo antes
         input.SendKeys(duracao.ToString());   
 
@@ -43,12 +43,12 @@ public class FilmeFormPageObject
     public FilmeFormPageObject PreencherLancamento(bool verdadeiro)
     { 
         wait.Until(d =>
-            d.FindElement(By.Id("Lancamento")).Displayed &&
-            d.FindElement(By.Id("Lancamento")).Enabled
+            d.FindElement(By.CssSelector("input[data-se='InputCheckBox']")).Displayed &&
+            d.FindElement(By.CssSelector("input[data-se='InputCheckBox']")).Enabled
         );
 
-        var imput = driver.FindElement(By.Id("Lancamento"));
-        imput?.Clear(); // limpa o campo antes
+        var imput = driver.FindElement(By.CssSelector("input[data-se='InputCheckBox']"));
+
         imput?.SendKeys(verdadeiro ? "true" : "false");
 
         return this;
@@ -57,11 +57,11 @@ public class FilmeFormPageObject
     public FilmeFormPageObject SelecionarGenero(string genero)
     {
         wait.Until(d =>
-            d.FindElement(By.Id("GeneroId")).Displayed &&
-            d.FindElement(By.Id("GeneroId")).Enabled
+            d.FindElement(By.CssSelector("select[data-se='InputGenero']")).Displayed &&
+            d.FindElement(By.CssSelector("select[data-se='InputGenero']")).Enabled
         );
 
-        var select = new SelectElement(driver.FindElement(By.Id("GeneroId")));
+        var select = new SelectElement(driver.FindElement(By.CssSelector("select[data-se='InputGenero']")));
         select.SelectByText(genero);
 
         return this;
@@ -69,7 +69,7 @@ public class FilmeFormPageObject
 
     public FilmeIndexPageObject Confirmar()
     {
-        wait.Until(d => d.FindElement(By.CssSelector("button[type='submit']"))).Click();
+        wait.Until(d => d.FindElement(By.CssSelector("button[data-se='btnConfirmar']"))).Click();
 
         wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
 

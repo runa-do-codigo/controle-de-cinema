@@ -97,7 +97,7 @@ public class ExcluirSessaoViewModel
     public int Sala { get; set; }
 
     public ExcluirSessaoViewModel() { }
-    public ExcluirSessaoViewModel(Guid id, DateTime inicio, string filmeTitulo, int salaNumero)
+    public ExcluirSessaoViewModel(Guid id, DateTime inicio, string filmeTitulo, int salaNumero) : this()
     {
         Id = id;
         Inicio = inicio;

@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
@@ -45,7 +45,7 @@ public class GeneroFilmeIndexPageObject
 
     public bool ContemGeneroFilme(string nome)
     {
-        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnConfirmar']")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
 
         return driver.PageSource.Contains(nome);
     }

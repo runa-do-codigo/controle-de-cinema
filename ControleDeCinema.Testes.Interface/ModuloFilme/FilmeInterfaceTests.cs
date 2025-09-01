@@ -1,4 +1,4 @@
-﻿using ControleDeCinema.Testes.Interface.Compartilhado;
+using ControleDeCinema.Testes.Interface.Compartilhado;
 
 namespace ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
 
@@ -6,18 +6,31 @@ namespace ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
 [TestCategory("Tests de Interface de Filme")]
 public sealed class FilmeInterfaceTests : TestFixture
 {
+    [TestInitialize]
+    public override void InicializarTeste()
+    {
+        base.InicializarTeste();
+        RegistrarContaEmpresarial();
+    }
+
     [TestMethod]
     public void Deve_Cadastrar_Filme_Corretamente()
     {
         // Arange
+        var indexGeneroPageObject = new GeneroFilmeIndexPageObject(driver!)
+            .IrPara(enderecoBase!)
+            .ClickCadastrar()
+            .PreencherDescricao("Suspense")
+            .Confirmar();
+
         var indexPageObject = new FilmeIndexPageObject(driver!)
             .IrPara(enderecoBase!);
 
         // Act
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("O Mano")
-            .PreencherDuracao(129)  
+            .PreencherTitulo("O Mano")
+            .PreencherDuracao(129)
             .PreencherLancamento(true)
             .SelecionarGenero("Suspense")
             .Confirmar();
@@ -30,13 +43,25 @@ public sealed class FilmeInterfaceTests : TestFixture
     public void Deve_Editar_Filme_Corretamente()
     {
         // Arrange
+        var indexGeneroPageObject = new GeneroFilmeIndexPageObject(driver!)
+            .IrPara(enderecoBase!)
+            .ClickCadastrar()
+            .PreencherDescricao("Suspense")
+            .Confirmar();
+
+        indexGeneroPageObject
+            .IrPara(enderecoBase!)
+            .ClickCadastrar()
+            .PreencherDescricao("Terror")
+            .Confirmar();
+
         var indexPageObject = new FilmeIndexPageObject(driver!)
             .IrPara(enderecoBase!);
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("O Mano")
-            .PreencherDuracao(129)  
+            .PreencherTitulo("O Mano")
+            .PreencherDuracao(129)
             .PreencherLancamento(true)
             .SelecionarGenero("Suspense")
             .Confirmar();
@@ -44,8 +69,8 @@ public sealed class FilmeInterfaceTests : TestFixture
         // Act
         indexPageObject
             .ClickEditar()
-            .PreencherNome("O Mano Editada")
-            .PreencherDuracao(109)  
+            .PreencherTitulo("O Mano Editada")
+            .PreencherDuracao(109)
             .PreencherLancamento(false)
             .SelecionarGenero("Terror")
             .Confirmar();
@@ -58,13 +83,19 @@ public sealed class FilmeInterfaceTests : TestFixture
     public void Deve_Excluir_Filme_Corretamente()
     {
         // Arrange
+        var indexGeneroPageObject = new GeneroFilmeIndexPageObject(driver!)
+            .IrPara(enderecoBase!)
+            .ClickCadastrar()
+            .PreencherDescricao("Suspense")
+            .Confirmar();
+
         var indexPageObject = new FilmeIndexPageObject(driver!)
             .IrPara(enderecoBase!);
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("O Mano")
-            .PreencherDuracao(129)  
+            .PreencherTitulo("O Mano")
+            .PreencherDuracao(129)
             .PreencherLancamento(true)
             .SelecionarGenero("Suspense")
             .Confirmar();

@@ -77,7 +77,7 @@ public class ExcluirFilmeViewModel
 
     public ExcluirFilmeViewModel() { }
 
-    public ExcluirFilmeViewModel(Guid id, string titulo)
+    public ExcluirFilmeViewModel(Guid id, string titulo): this()
     {
         Id = id;
         Titulo = titulo;

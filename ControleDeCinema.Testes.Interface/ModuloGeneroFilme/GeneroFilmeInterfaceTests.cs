@@ -1,4 +1,4 @@
-﻿using ControleDeCinema.Testes.Interface.Compartilhado;
+using ControleDeCinema.Testes.Interface.Compartilhado;
 
 namespace ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
 
@@ -23,7 +23,7 @@ public sealed class GeneroFilmeInterfaceTests : TestFixture
         // Act
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("Suspense")
+            .PreencherDescricao("Suspense")
             .Confirmar();
 
         // Assert
@@ -39,13 +39,13 @@ public sealed class GeneroFilmeInterfaceTests : TestFixture
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("Suspense")
+            .PreencherDescricao("Suspense")
             .Confirmar();
 
         // Act
         indexPageObject
             .ClickEditar()
-            .PreencherNome("Suspense Editada")
+            .PreencherDescricao("Suspense Editada")
             .Confirmar();
 
         // Assert
@@ -61,7 +61,7 @@ public sealed class GeneroFilmeInterfaceTests : TestFixture
 
         indexPageObject
             .ClickCadastrar()
-            .PreencherNome("Suspense")
+            .PreencherDescricao("Suspense")
             .Confirmar();
 
         // Act
