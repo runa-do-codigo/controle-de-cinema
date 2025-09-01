@@ -1,4 +1,4 @@
-﻿using TesteFacil.Testes.Interface.Compartilhado;
+﻿using ControleDeCinema.Testes.Interface.Compartilhado;
 
 namespace ControleDeCinema.Testes.Interface.ModuloGeneroFilme;
 

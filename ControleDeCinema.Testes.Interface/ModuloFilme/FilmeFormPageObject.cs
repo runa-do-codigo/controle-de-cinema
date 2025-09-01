@@ -35,7 +35,7 @@ public class FilmeFormPageObject
 
         var input = driver.FindElement(By.Id("Duracao"));
         input.Clear(); // limpa o campo antes
-        input.SendKeys(duracao.ToString());
+        input.SendKeys(duracao.ToString());   
 
         return this;
     }
