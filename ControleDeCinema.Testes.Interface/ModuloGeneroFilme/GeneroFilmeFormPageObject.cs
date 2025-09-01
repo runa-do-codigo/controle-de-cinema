@@ -30,7 +30,7 @@ public class GeneroFilmeFormPageObject
     {
         wait.Until(d => d.FindElement(By.CssSelector("button[type='submit']"))).Click();
 
-        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnConfirmar']")).Displayed);
 
         return new GeneroFilmeIndexPageObject(driver!);
     }

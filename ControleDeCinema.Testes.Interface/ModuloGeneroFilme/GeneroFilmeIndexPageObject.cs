@@ -21,6 +21,7 @@ public class GeneroFilmeIndexPageObject
 
         return this;
     }
+
     public GeneroFilmeFormPageObject ClickCadastrar()
     {
         wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']"))).Click();
@@ -44,7 +45,7 @@ public class GeneroFilmeIndexPageObject
 
     public bool ContemGeneroFilme(string nome)
     {
-        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnConfirmar']")).Displayed);
 
         return driver.PageSource.Contains(nome);
     }

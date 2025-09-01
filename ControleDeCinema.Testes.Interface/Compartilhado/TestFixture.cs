@@ -69,6 +69,8 @@ public abstract class TestFixture
         dbContext = ControleDeCinemaDbContextFactory.CriarDbContext(dbContainer.GetConnectionString());
 
         ConfigurarTabelas(dbContext);
+
+        driver.Manage().Cookies.DeleteAllCookies();
     }
 
     private static void ConfigurarTabelas(ControleDeCinemaDbContext dbContext)
@@ -80,6 +82,9 @@ public abstract class TestFixture
         dbContext.Salas.RemoveRange(dbContext.Salas);
         dbContext.Filmes.RemoveRange(dbContext.Filmes);
         dbContext.GenerosFilme.RemoveRange(dbContext.GenerosFilme);
+
+        dbContext.UserRoles.RemoveRange(dbContext.UserRoles);
+        dbContext.Users.RemoveRange(dbContext.Users);
 
         dbContext.SaveChanges();
     }
