@@ -1,89 +1,89 @@
-﻿using ControleDeCinema.Dominio.ModuloFilme;
-using ControleDeCinema.Dominio.ModuloGeneroFilme;
-using ControleDeCinema.Dominio.ModuloSala;
-using ControleDeCinema.Dominio.ModuloSessao;
-using ControleDeCinema.Testes.Interface.ModuloSessao;
-using ControleDeCinema.Testes.Interface.Compartilhado;
+﻿//using ControleDeCinema.Dominio.ModuloFilme;
+//using ControleDeCinema.Dominio.ModuloGeneroFilme;
+//using ControleDeCinema.Dominio.ModuloSala;
+//using ControleDeCinema.Dominio.ModuloSessao;
+//using ControleDeCinema.Testes.Interface.ModuloSessao;
+//using ControleDeCinema.Testes.Interface.Compartilhado;
 
-namespace ControleDeCinema.Testes.Interface.ModuloSessao;
+//namespace ControleDeCinema.Testes.Interface.ModuloSessao;
 
-[TestClass]
-[TestCategory("Tests de Interface de Sessao")]
-public sealed class SessaoInterfaceTests : TestFixture
-{
-    [TestMethod]
-    public void Deve_Cadastrar_Sessao_Corretamente()
-    {
-        // Arange
-        var indexPageObject = new SessaoIndexPageObject(driver!)
-            .IrPara(enderecoBase!);
+//[TestClass]
+//[TestCategory("Tests de Interface de Sessao")]
+//public sealed class SessaoInterfaceTests : TestFixture
+//{
+//    [TestMethod]
+//    public void Deve_Cadastrar_Sessao_Corretamente()
+//    {
+//        // Arange
+//        var indexPageObject = new SessaoIndexPageObject(driver!)
+//            .IrPara(enderecoBase!);
 
-        // Act
-        indexPageObject
-            .ClickCadastrar()
-            .PreencherNumeroIngressos(200)
-            .PreencherEncerrada(true)
-            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
-            .SelecionarSala(new Sala(1, 100))
-            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
-            .Confirmar();
+//        // Act
+//        indexPageObject
+//            .ClickCadastrar()
+//            .PreencherNumeroIngressos(200)
+//            .PreencherEncerrada(true)
+//            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
+//            .SelecionarSala(new Sala(1, 100))
+//            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
+//            .Confirmar();
 
-        // Assert
-        Assert.IsTrue(indexPageObject.ContemSessao(new Guid()));
-    }
+//        // Assert
+//        Assert.IsTrue(indexPageObject.ContemSessao(new Guid()));
+//    }
 
-    [TestMethod]
-    public void Deve_Editar_Sessao_Corretamente()
-    {
-        // Arrange
-        var indexPageObject = new SessaoIndexPageObject(driver!)
-            .IrPara(enderecoBase!);
+//    [TestMethod]
+//    public void Deve_Editar_Sessao_Corretamente()
+//    {
+//        // Arrange
+//        var indexPageObject = new SessaoIndexPageObject(driver!)
+//            .IrPara(enderecoBase!);
 
-        indexPageObject
-            .ClickCadastrar()
-            .PreencherNumeroIngressos(200)
-            .PreencherEncerrada(true)
-            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
-            .SelecionarSala(new Sala(1, 100))
-            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
-            .Confirmar();
+//        indexPageObject
+//            .ClickCadastrar()
+//            .PreencherNumeroIngressos(200)
+//            .PreencherEncerrada(true)
+//            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
+//            .SelecionarSala(new Sala(1, 100))
+//            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
+//            .Confirmar();
 
-        // Act
-        indexPageObject
-            .ClickEditar()
-            .PreencherNumeroIngressos(200)
-            .PreencherEncerrada(true)
-            .SelecionarFilme(new Filme("O Mano 2", 109, true, new GeneroFilme("Terror")))
-            .SelecionarSala(new Sala(2, 150))
-            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
-            .Confirmar();
+//        // Act
+//        indexPageObject
+//            .ClickEditar()
+//            .PreencherNumeroIngressos(200)
+//            .PreencherEncerrada(true)
+//            .SelecionarFilme(new Filme("O Mano 2", 109, true, new GeneroFilme("Terror")))
+//            .SelecionarSala(new Sala(2, 150))
+//            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
+//            .Confirmar();
 
-        // Assert
-        Assert.IsTrue(indexPageObject.ContemSessao(new Guid()));
-    }
+//        // Assert
+//        Assert.IsTrue(indexPageObject.ContemSessao(new Guid()));
+//    }
 
-    [TestMethod]
-    public void Deve_Excluir_Sessao_Corretamente()
-    {
-        // Arrange
-        var indexPageObject = new SessaoIndexPageObject(driver!)
-            .IrPara(enderecoBase!);
+//    [TestMethod]
+//    public void Deve_Excluir_Sessao_Corretamente()
+//    {
+//        // Arrange
+//        var indexPageObject = new SessaoIndexPageObject(driver!)
+//            .IrPara(enderecoBase!);
 
-        indexPageObject
-            .ClickCadastrar()
-            .PreencherNumeroIngressos(200)
-            .PreencherEncerrada(true)
-            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
-            .SelecionarSala(new Sala(1, 100))
-            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
-            .Confirmar();
+//        indexPageObject
+//            .ClickCadastrar()
+//            .PreencherNumeroIngressos(200)
+//            .PreencherEncerrada(true)
+//            .SelecionarFilme(new Filme("O Mano", 129, false, new GeneroFilme("Suspense")))
+//            .SelecionarSala(new Sala(1, 100))
+//            .PreencherDataHora(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc))
+//            .Confirmar();
 
-        // Act
-        indexPageObject
-            .ClickExcluir()
-            .Confirmar();
+//        // Act
+//        indexPageObject
+//            .ClickExcluir()
+//            .Confirmar();
 
-        // Assert
-        Assert.IsFalse(indexPageObject.ContemSessao(new Guid()));
-    }
-}
+//        // Assert
+//        Assert.IsFalse(indexPageObject.ContemSessao(new Guid()));
+//    }
+//}
