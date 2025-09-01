@@ -1,6 +1,9 @@
 # Controle de Cinema
 
-![Cinema]()
+<div align="center">
+  <img src="https://i.imgur.com/m5Ge8sr.gif" alt="Cliente" width="298" />
+  <img src="https://i.imgur.com/K48XU9w.gif" alt="Empresa" width="300" />
+</div>
 
 ## Introdução
 

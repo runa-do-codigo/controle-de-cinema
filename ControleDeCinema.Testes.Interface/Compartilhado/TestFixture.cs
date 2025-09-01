@@ -90,7 +90,7 @@ public abstract class TestFixture
           .WithPortBinding(dbPort, true)
           .WithNetwork(rede)
           .WithNetworkAliases("controle-cinema-e2e-testdb")
-          .WithName("controle-cinema-e2e-testdb")
+          .WithName("controle-cinema-e2e-testdb2")
           .WithDatabase("ControleDeCinemaTestDb")
           .WithUsername("postgres")
           .WithPassword("YourStrongPassword")
@@ -110,7 +110,7 @@ public abstract class TestFixture
             .WithDockerfileDirectory(CommonDirectoryPath.GetSolutionDirectory(), string.Empty)
             .WithDockerfile("Dockerfile")
             .WithBuildArgument("RESOURCE_REAPER_SESSION_ID", ResourceReaper.DefaultSessionId.ToString("D"))
-            .WithName("teste-facil-app-e2e:latest")
+            .WithName("controle-cinema-e2e-testdb")
             .Build();
 
         await imagem.CreateAsync().ConfigureAwait(false);
@@ -126,9 +126,8 @@ public abstract class TestFixture
             .WithPortBinding(appPort, true)
             .WithNetwork(rede)
             .WithNetworkAliases("controle-cinema-webapp")
-            .WithName("controle-cinema-webapp")
+            .WithName("controle-cinema-webapp2")
             .WithEnvironment("SQL_CONNECTION_STRING", connectionStringRede)
-            .WithEnvironment("GEMINI_API_KEY", configuracao?["GEMINI_API_KEY"])
             .WithEnvironment("NEWRELIC_LICENSE_KEY", configuracao?["NEWRELIC_LICENSE_KEY"])
             .WithWaitStrategy(Wait.ForUnixContainer()
                 .UntilPortIsAvailable(appPort)

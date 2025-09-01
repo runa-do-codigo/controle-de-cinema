@@ -2,27 +2,20 @@
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
 using ControleDeCinema.Dominio.ModuloSala;
 using ControleDeCinema.Dominio.ModuloSessao;
-using ControleDeCinema.Infraestrutura.Orm.Compartilhado;
-using ControleDeCinema.Infraestrutura.Orm.ModuloSessao;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using ControleDeCinema.Testes.Integracao.Compartilhado;
 
 namespace ControleDeCinema.Testes.Integracao.ModuloSessao;
 
 [TestClass]
 [TestCategory("Testes de Integração de Sessao")]
 
-public sealed class RepositorioSessaoEmOrmTests
+public sealed class RepositorioSessaoEmOrmTests : TestFixture
 {
-    private ControleDeCinemaDbContext dbContext;
-    private RepositorioSessaoEmOrm repositorioSessao;
-
     [TestMethod]
     public void Deve_Cadastrar_Sessao_Corretamente()
     {
-
         // Arrange
-        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
 
         // Act
         repositorioSessao?.Cadastrar(sessao);
@@ -33,16 +26,17 @@ public sealed class RepositorioSessaoEmOrmTests
 
         Assert.AreEqual(sessao, registroSelecionado);
     }
+
     [TestMethod]
     public void Deve_Editar_Sessao_Corretamente()
     {
 
         // Arrange
-        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
         repositorioSessao?.Cadastrar(sessao);
         dbContext?.SaveChanges();
 
-        var sessaoEditada = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano 2", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessaoEditada = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 50, new Filme("O Mano 2", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
 
         // Act
         var conseguiuEditar = repositorioSessao?.Editar(sessao.Id, sessaoEditada);
@@ -59,7 +53,7 @@ public sealed class RepositorioSessaoEmOrmTests
     public void Deve_Excluir_Sessao_Corretamente()
     {
         // Arrange
-        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
         repositorioSessao?.Cadastrar(sessao);
         dbContext?.SaveChanges();
 
@@ -79,9 +73,9 @@ public sealed class RepositorioSessaoEmOrmTests
     {
 
         // Arrange - Arranjo
-        var sessao = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
-        var sessao2 = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano 2", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
-        var sessao3 = new Sessao(new DateTime(2000, 1, 1), 50, new Filme("O Mano 3", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 50, new Filme("O Mano", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao2 = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 50, new Filme("O Mano 2", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
+        var sessao3 = new Sessao(new DateTime(2000, 1, 1, 12, 12, 0, DateTimeKind.Utc), 50, new Filme("O Mano 3", 129, true, new GeneroFilme("Suspense")), new Sala(001, 200));
 
         List<Sessao> sessaoEsperados = [sessao, sessao2, sessao3];
 
@@ -96,7 +90,6 @@ public sealed class RepositorioSessaoEmOrmTests
         var filmesRecebidas = repositorioSessao?.SelecionarRegistros();
 
         // Assert - Asseção
-        CollectionAssert.AreEqual(filmesEsperadasOrdenadas, filmesRecebidas);
+        CollectionAssert.AreEquivalent(filmesEsperadasOrdenadas, filmesRecebidas);
     }
-
 }

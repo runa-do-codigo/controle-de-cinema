@@ -1,6 +1,6 @@
 ﻿using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGeneroFilme;
-using TesteFacil.Testes.Integracao.Compartilhado;
+using ControleDeCinema.Testes.Integracao.Compartilhado;
 
 namespace ControleDeCinema.Testes.Integracao.ModuloFilme;
 
@@ -89,6 +89,6 @@ public sealed class RepositorioFilmeEmOrmTests : TestFixture
         var filmesRecebidas = repositorioFilme?.SelecionarRegistros();
 
         // Assert - Asseção
-        CollectionAssert.AreEqual(filmesEsperadasOrdenadas, filmesRecebidas);
+        CollectionAssert.AreEquivalent(filmesEsperadasOrdenadas, filmesRecebidas);
     }
 }

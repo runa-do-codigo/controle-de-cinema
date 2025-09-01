@@ -10,7 +10,7 @@ using ControleDeCinema.Infraestrutura.Orm.ModuloSessao;
 using DotNet.Testcontainers.Containers;
 using FizzWare.NBuilder;
 using Testcontainers.PostgreSql;
-namespace TesteFacil.Testes.Integracao.Compartilhado;
+namespace ControleDeCinema.Testes.Integracao.Compartilhado;
 
 [TestClass]
 public abstract class TestFixture
@@ -30,10 +30,10 @@ public abstract class TestFixture
     {
         container = new PostgreSqlBuilder()
             .WithImage("postgres:16")
-            .WithName("teste-facil-testdb")
-            .WithDatabase("TesteFacilTestDb")
+            .WithName("controle-de-cinema")
+            .WithDatabase("CONTROLECINE")
             .WithUsername("postgres")
-            .WithPassword("YourStrongPassword")
+            .WithPassword("CINEE")
             .WithCleanUp(true)
             .Build();
 
@@ -79,11 +79,11 @@ public abstract class TestFixture
     {
         dbContext.Database.EnsureCreated();
 
-        dbContext.Salas.RemoveRange(dbContext.Salas);
+        dbContext.Ingressos.RemoveRange(dbContext.Ingressos);
         dbContext.Sessoes.RemoveRange(dbContext.Sessoes);
+        dbContext.Salas.RemoveRange(dbContext.Salas);
         dbContext.Filmes.RemoveRange(dbContext.Filmes);
         dbContext.GenerosFilme.RemoveRange(dbContext.GenerosFilme);
-        dbContext.Ingressos.RemoveRange(dbContext.Ingressos);
 
         dbContext.SaveChanges();
     }
