@@ -9,24 +9,24 @@
     <div class="col-md-8">
         <div class="card rounded-4 border-0">
             <div class="card-body p-md-5">
-                <form asp-action="ComprarIngresso">
+                <form asp-action="ComprarIngresso" data-se="form">
                     <h3>Formulário de Cadastro</h3>
 
                     <partial name="_ValidationAlert"></partial>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Filme" class="control-label fs-5">Filme:</label>
-                        <input asp-for="Filme" class="form-control" disabled readonly data-se="ImputFilme" />
+                        <input asp-for="Filme" class="form-control" disabled readonly data-se="InputFilme" />
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Sala" class="control-label fs-5">Sala:</label>
-                        <input asp-for="Sala" class="form-control" disabled readonly data-se="ImputSala"/>
+                        <input asp-for="Sala" class="form-control" disabled readonly data-se="InputSala"/>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Assento" class="control-label fs-5">Assento:</label>
-                        <select asp-for="Assento" asp-items="@Model.AssentosDisponiveis" class="form-select"></select>
+                        <select asp-for="Assento" asp-items="@Model.AssentosDisponiveis" class="form-select" data-se="InputAssento"></select>
                         <span asp-validation-for="Assento" class="text-danger"></span>
                     </div>
 

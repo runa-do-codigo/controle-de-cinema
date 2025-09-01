@@ -19,31 +19,31 @@
 
                 <partial name="_ValidationAlert"></partial>
 
-                <form asp-action="Registro" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="mt-3">
+                <form asp-action="Registro" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="mt-3" data-se="form">
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Email" class="control-label fs-5">Email</label>
-                        <input asp-for="Email" class="form-control" data-se="ImputEmail" />
+                        <input asp-for="Email" class="form-control" data-se="InputEmail" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Senha" class="control-label fs-5">Senha</label>
-                        <input asp-for="Senha" class="form-control" type="password" data-se="ImputSenha" />
+                        <input asp-for="Senha" class="form-control" type="password" data-se="InputSenha" />
                         <span asp-validation-for="Senha" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="ConfirmarSenha" class="control-label fs-5">Confirmação da Senha</label>
-                        <input asp-for="ConfirmarSenha" class="form-control" type="password" data-se="ImputConfirmarSenha" />
+                        <input asp-for="ConfirmarSenha" class="form-control" type="password" data-se="InputConfirmarSenha" />
                         <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
-                        <label asp-for="ConfirmarSenha" class="control-label fs-5">Tipo de Usuário</label>
-                        <select asp-for="Tipo" asp-items="@Html.GetEnumSelectList<TipoUsuario>()" class="form-select">
+                        <label asp-for="Tipo" class="control-label fs-5">Tipo de Usuário</label>
+                        <select asp-for="Tipo" asp-items="@Html.GetEnumSelectList<TipoUsuario>()" class="form-select" data-se="InputTipo">
                         </select>
-                        <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                        <span asp-validation-for="Tipo" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">

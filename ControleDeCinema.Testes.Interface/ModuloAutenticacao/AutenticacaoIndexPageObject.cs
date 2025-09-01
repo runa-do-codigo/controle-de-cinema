@@ -18,7 +18,7 @@ public class AutenticacaoIndexPageObject
 
     public AutenticacaoIndexPageObject IrPara(string enderecoBase)
     {
-        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "disciplinas"));
+        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "sutenticacao"));
 
         return this;
     }

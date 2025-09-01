@@ -14,25 +14,25 @@
 
                 <div class="form-group d-grid gap-2 mt-3">
                     <label for="Inicio" class="control-label fs-5">Início:</label>
-                    <input name="Inicio" class="form-control" value="@Model.Inicio" readonly disabled />
+                    <input name="Inicio" class="form-control" value="@Model.Inicio" readonly disabled data-se="InputInicio" />
                 </div>
 
                 <div class="form-group d-grid gap-2 mt-3">
                     <label for="MaxIngressos" class="control-label fs-5">Número máximo de ingressos:</label>
-                    <input name="MaxIngressos" class="form-control" value="@Model.MaxIngressos" readonly disabled />
+                    <input name="MaxIngressos" class="form-control" value="@Model.MaxIngressos" readonly disabled data-se="InputMaxIngressos" />
                 </div>
 
                 <div class="form-group d-grid gap-2 mt-3">
                     <label for="Filme" class="control-label fs-5">Filme:</label>
-                    <input name="Filme" class="form-control" value="@Model.Filme" readonly disabled />
+                    <input name="Filme" class="form-control" value="@Model.Filme" readonly disabled data-se="InputFilme" />
                 </div>
 
                 <div class="form-group d-grid gap-2 mt-3">
                     <label for="Sala" class="control-label fs-5">Sala:</label>
-                    <input name="Sala" class="form-control" value="@Model.Sala" readonly disabled />
+                    <input name="Sala" class="form-control" value="@Model.Sala" readonly disabled data-se="InputSala" />
                 </div>
 
-                <form asp-action="EncerrarConfirmado" asp-route-id="@Model.Id" class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+                <form asp-action="EncerrarConfirmado" asp-route-id="@Model.Id" class="form-group d-flex align-items-center justify-content-end gap-3 mt-5" data-se="form">
                     <a asp-action="Index">Voltar para a listagem</a>
                     <button type="submit" class="btn btn-danger rounded-3 px-5" data-se="btnEncerrar">Encerrar</button>
                 </form>

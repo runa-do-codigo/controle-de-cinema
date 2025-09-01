@@ -18,7 +18,7 @@ public class SessaoIndexPageObject
 
     public SessaoIndexPageObject IrPara(string enderecoBase)
     {
-        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "disciplinas"));
+        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "sessao"));
 
         return this;
     }

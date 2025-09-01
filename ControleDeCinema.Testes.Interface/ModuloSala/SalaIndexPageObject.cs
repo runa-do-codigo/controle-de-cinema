@@ -17,7 +17,7 @@ public class SalaIndexPageObject
 
     public SalaIndexPageObject IrPara(string enderecoBase)
     {
-        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "disciplinas"));
+        driver.Navigate().GoToUrl(Path.Combine(enderecoBase, "sala"));
 
         return this;
     }

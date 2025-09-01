@@ -17,17 +17,17 @@
 
                 <partial name="_ValidationAlert"></partial>
 
-                <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="mt-3">
+                <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="mt-3" data-se="form">
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Email" class="control-label fs-5">Email</label>
-                        <input asp-for="Email" class="form-control" data-se="ImputEmail" />
+                        <input asp-for="Email" class="form-control" data-se="InputEmail" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="Senha" class="control-label fs-5">Senha</label>
-                        <input asp-for="Senha" class="form-control" type="password" data-se="ImputSenha" />
+                        <input asp-for="Senha" class="form-control" type="password" data-se="InputSenha" />
                         <span asp-validation-for="Senha" class="text-danger"></span>
                     </div>
 
