@@ -18,7 +18,7 @@ public class SessaoFormPageObject
 
         wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
-        wait.Until(d => d.FindElement(By.CssSelector("form")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("form[data-se='form']")).Displayed);
     }
 
     public SessaoFormPageObject PreencherNumeroIngressos(int numeroIngressos)
@@ -38,7 +38,6 @@ public class SessaoFormPageObject
         );
 
         var imput = driver.FindElement(By.Id("Encerrada"));
-        imput?.Clear(); // limpa o campo antes
         imput?.SendKeys(encerrada ? "true" : "false");
 
         return this;
@@ -90,7 +89,7 @@ public class SessaoFormPageObject
 
     public SessaoIndexPageObject Confirmar()
     {
-        wait.Until(d => d.FindElement(By.CssSelector("button[type='submit']"))).Click();
+        wait.Until(d => d.FindElement(By.CssSelector("button[data-se='btnConfirmar']"))).Click();
 
         wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
 

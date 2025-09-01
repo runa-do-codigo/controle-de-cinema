@@ -14,13 +14,12 @@ public class SalaFormPageObject
 
         wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
-        wait.Until(d => d.FindElement(By.CssSelector("form")).Displayed);
+        wait.Until(d => d.FindElement(By.CssSelector("form[data-se='form']")).Displayed);
     }
 
     public SalaFormPageObject PreencherNumero(int numeroSala)
     {
         var inputNumero = driver?.FindElement(By.Id("Numero"));
-        inputNumero?.Clear();
         inputNumero?.SendKeys(numeroSala.ToString());
 
         return this;
@@ -34,7 +33,6 @@ public class SalaFormPageObject
         );
 
         var input = driver.FindElement(By.Id("Capacidade"));
-        input.Clear(); // limpa o campo antes
         input.SendKeys(capacidade.ToString());
 
         return this;
@@ -42,7 +40,7 @@ public class SalaFormPageObject
 
     public SalaIndexPageObject Confirmar()
     {
-        wait.Until(d => d.FindElement(By.CssSelector("button[type='submit']"))).Click();
+        wait.Until(d => d.FindElement(By.CssSelector("button[data-se='btnConfirmar']"))).Click();
 
         wait.Until(d => d.FindElement(By.CssSelector("a[data-se='btnCadastrar']")).Displayed);
 
